@@ -1,10 +1,12 @@
 <script setup>
-import UserLayout from '@/layout/UserLayout.vue';
+import AdminLayout from '@/layout/AdminLayout.vue';
 
 </script>
 
 <template>
-  <UserLayout>
+  <AdminLayout>
     HomeView
-  </UserLayout>
+  </AdminLayout>
+
+
 </template>
