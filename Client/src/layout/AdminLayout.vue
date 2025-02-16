@@ -15,103 +15,28 @@
       <div class="scroll-sidebar" data-simplebar="">
         <nav class=" w-full flex flex-col sidebar-nav px-4 mt-5">
           <ul id="sidebarnav" class="text-gray-600 text-sm">
-            <li class="text-xs font-bold pb-[5px]">
+            <li class="text-xs font-bold pb-[15px]">
               <i class="ti ti-dots nav-small-cap-icon text-lg hidden text-center"></i>
               <span class="text-xs text-gray-400 font-semibold">HOME</span>
             </li>
 
             <li class="sidebar-item">
-              <a class="sidebar-link gap-3 py-2.5 my-1 text-base  flex items-center relative  rounded-md text-gray-500  w-full"
-                href="@@webRoot/index.html">
-                <i class="ti ti-layout-dashboard ps-2  text-2xl"></i> <span>Dashboard</span>
-              </a>
-            </li>
+              <div
+                class="sidebar-link gap-3 py-2.5 my-1  cursor-pointer flex items-center relative  rounded-md   w-full">
+                <svg class="size-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                  <path
+                    d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512l388.6 0c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304l-91.4 0z" />
+                </svg> <span class="text-xl font-semibold">Users</span>
 
-            <li class="text-xs font-bold mb-4 mt-6">
-              <i class="ti ti-dots nav-small-cap-icon text-lg hidden text-center"></i>
-              <span class="text-xs text-gray-400 font-semibold">UI COMPONENTS</span>
+              </div>
             </li>
-
-            <li class="sidebar-item">
-              <a class="sidebar-link gap-3 py-2.5 my-1 text-base   flex items-center relative  rounded-md text-gray-500  w-full"
-                href="#">
-                <i class="ti ti-article ps-2 text-2xl"></i> <span>Buttons</span>
-              </a>
-            </li>
-
-            <li class="sidebar-item">
-              <a class="sidebar-link gap-3 py-2.5 my-1 text-base   flex items-center relative  rounded-md text-gray-500  w-full"
-                href="#">
-                <i class="ti ti-alert-circle ps-2 text-2xl"></i> <span>Alerts</span>
-              </a>
-            </li>
-
-            <li class="sidebar-item">
-              <a class="sidebar-link gap-3 py-2.5 my-1 text-base   flex items-center relative  rounded-md text-gray-500  w-full"
-                href="#">
-                <i class="ti ti-cards ps-2 text-2xl"></i> <span>Card</span>
-              </a>
-            </li>
-
-            <li class="sidebar-item">
-              <a class="sidebar-link gap-3 py-2.5 my-1 text-base   flex items-center relative  rounded-md text-gray-500  w-full"
-                href="#">
-                <i class="ti ti-file-description ps-2 text-2xl"></i> <span>Forms</span>
-              </a>
-            </li>
-
-            <li class="sidebar-item">
-              <a class="sidebar-link gap-3 py-2.5 my-1 text-base   flex items-center relative  rounded-md text-gray-500  w-full"
-                href="#">
-                <i class="ti ti-typography ps-2 text-2xl"></i> <span>Typography</span>
-              </a>
-            </li>
-
-            <li class="text-xs font-bold mb-4 mt-8">
-              <i class="ti ti-dots nav-small-cap-icon  text-lg hidden text-center"></i>
-              <span class="text-xs text-gray-400 font-semibold">AUTH</span>
-            </li>
-
-            <li class="sidebar-item">
-              <a class="sidebar-link gap-3 py-2.5 my-1 text-base   flex items-center relative  rounded-md text-gray-500  w-full"
-                href="#">
-                <i class="ti ti-login ps-2 text-2xl"></i> <span>Login</span>
-              </a>
-            </li>
-
-            <li class="sidebar-item">
-              <a class="sidebar-link gap-3 py-2.5 my-1 text-base   flex items-center relative  rounded-md text-gray-500  w-full"
-                href="#">
-                <i class="ti ti-user-plus ps-2 text-2xl"></i> <span>Register</span>
-              </a>
-            </li>
-
-            <li class="text-xs font-bold mb-4 mt-8">
-              <i class="ti ti-dots nav-small-cap-icon text-lg hidden text-center"></i>
-              <span class="text-xs text-gray-400 font-semibold">EXTRA</span>
-            </li>
-
-            <li class="sidebar-item">
-              <a class="sidebar-link gap-3 py-2.5 my-1 text-base   flex items-center relative  rounded-md text-gray-500  w-full"
-                href="#">
-                <i class="ti ti-mood-happy ps-2 text-2xl"></i> <span>Icons</span>
-              </a>
-            </li>
-
-            <li class="sidebar-item">
-              <a class="sidebar-link gap-3 py-2.5 my-1 text-base   flex items-center relative  rounded-md text-gray-500  w-full"
-                href="#">
-                <i class="ti ti-aperture ps-2 text-2xl"></i> <span>Sample Page</span>
-              </a>
-            </li>
-
           </ul>
         </nav>
       </div>
 
       <!-- Bottom Upgrade Option -->
       <div class="m-4  relative grid">
-        <button class="text-base font-semibold hover:bg-green-700 btn">Upgrade to Pro</button>
+        <button class="text-base font-semibold hover:bg-red-700 btn">Upgrade to Pro</button>
       </div>
       <!-- </aside> -->
     </aside>
