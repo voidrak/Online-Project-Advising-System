@@ -14,6 +14,7 @@ const formData = reactive({
   password: "",
   password_confirmation: "",
   department: "",
+  student_id: "", // Add student_id to the form data
 });
 
 const departments = [
@@ -52,6 +53,18 @@ onMounted(() => (errors.value = {}));
                 {{ errors.name[0] }}
               </p>
             </div>
+
+            <!-- Student ID Input -->
+            <div>
+              <label for="student_id" class="mb-2 block text-sm text-gray-800">Student ID</label>
+              <input v-model="formData.student_id" id="student_id" name="student_id" type="text"
+                class="w-full rounded-md border border-gray-300 bg-white px-4 py-3 text-sm text-gray-800 outline-bg-light-green"
+                placeholder="wour/1234/12" />
+              <p v-if="errors.student_id" class="text-sm text-red-500">
+                {{ errors.student_id[0] }}
+              </p>
+            </div>
+
             <div>
               <label for="email" class="mb-2 block text-sm text-gray-800">Email</label>
               <input v-model="formData.email" id="email" name="email" type="email" autocomplete="email"
@@ -97,6 +110,7 @@ onMounted(() => (errors.value = {}));
                 {{ errors.department[0] }}
               </p>
             </div>
+
           </div>
           <div>
 

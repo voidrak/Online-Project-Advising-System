@@ -17,7 +17,6 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->string('student_id')->nullable();
-            $table->string('student_id')->nullable();
             $table->string('department')->nullable();
             $table->enum('role', ['admin', 'coordinator', 'advisor', 'student'])->default('student');
             $table->boolean('approved')->default(false);
