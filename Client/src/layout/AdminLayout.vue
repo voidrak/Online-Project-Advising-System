@@ -58,23 +58,10 @@ const authStore = useAuthStore();
       <main class="h-full  max-w-full  ">
         <div class="container full-container p-0 flex flex-col gap-6">
           <!--  Header Start -->
-          <header class=" bg-white shadow-md rounded-md w-full text-sm py-4 px-6">
-            <nav class=" w-ful flex items-center justify-between" aria-label="Global">
-              <ul class="icon-nav flex items-center gap-4">
+          <header class=" bg-white shadow-md text-center    text-2xl font-semibold rounded-md w-full  py-4 px-6">
 
-              </ul>
-              <div class="flex items-center gap-4">
-                <a href="#" class="btn text-base font-medium hover:bg-green-700" aria-current="page">Upgrade to Pro</a>
-                <div class="hs-dropdown relative inline-flex [--placement:bottom-right] sm:[--trigger:hover]">
-                  <a class="relative hs-dropdown-toggle cursor-pointer align-middle rounded-full">
-                    <!-- <img class="object-cover w-9 h-9 rounded-full" src="@@webRoot/assets/images/profile/user-1.jpg"
-                      alt="" aria-hidden="true"> -->
-                  </a>
-                </div>
+            Admin Page
 
-
-              </div>
-            </nav>
           </header>
           <!--  Header End -->
         </div>
