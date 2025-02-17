@@ -5,6 +5,7 @@ import LoginPage from '@/views/Auth/LoginPage.vue';
 import RegisterPage from '@/views/Auth/RegisterPage.vue';
 import AdminHome from '@/views/Admin/AdminHome.vue';
 import AdminRegistrationRequest from '@/views/Admin/AdminRegistrationRequest.vue';
+import UnApprovedStudentHome from '@/views/User/UnApprovedStudentHome.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -40,6 +41,12 @@ const router = createRouter({
       component: AdminRegistrationRequest,
       meta: { admin: true },
     },
+    {
+      path: '/unApprovedStudent',
+      name: 'UnApprovedStudent',
+      component: UnApprovedStudentHome,
+      meta: { UnApprovedStudent: true },
+    },
 
 
   ],
@@ -58,6 +65,12 @@ router.beforeEach(async (to, from) => {
   }
   if (authStore.user?.role === "admin" && to.meta.welcome) {
     return { name: "AdminHome" };
+  }
+  if (authStore.user?.role === "student" && !authStore.user?.approved && to.meta.welcome) {
+    return { name: "UnApprovedStudent" };
+  }
+  if (authStore.user?.role === "student" && !authStore.user?.approved && to.meta.guest) {
+    return { name: "UnApprovedStudent" };
   }
 
   if (authStore.user?.role === 'admin' && !to.meta.admin) {
