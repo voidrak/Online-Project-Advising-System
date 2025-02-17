@@ -19,11 +19,8 @@ import heroImage from "@/assets/image/home-img.svg"
                     class="px-8 py-3 bg-green-500 font-medium text-white text-md md:text-lg rounded-md hover:bg-green-700 transition ease-in-out duration-300 mr-14">Get
                     Started</a>
 
-                <a href="#" class="hidden lg:block font-normal text-gray-500 text-lg mr-8">Register</a>
-
-                <a href="#" class="px-4 py-4 text-gray-300 border-2 border-gray-200 rounded-full">
-                    <i data-feather="play"></i>
-                </a>
+                <a href="#"
+                    class="px-8 py-3 font-medium text-green-500 text-lg text-center border-2 border-green-500 rounded-md hover:bg-green-500 hover:text-white transition ease-linear duration-300">Register</a>
             </div>
         </div>
 
