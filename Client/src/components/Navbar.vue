@@ -1,5 +1,8 @@
 <script setup>
 import logo from "../assets/image/navbar-logo.svg";
+import { useAuthStore } from '@/stores/auth';
+
+const authStore = useAuthStore()
 </script>
 
 <template>
@@ -30,7 +33,13 @@ import logo from "../assets/image/navbar-logo.svg";
         class="font-medium text-green-500 text-lg hover:text-green-300 transition ease-in-out duration-300 mb-5 lg:mb-0">
         <a href="#">Blog</a>
       </li>
-      <div class="flex gap-x-4">
+      <div @click="authStore.logout" class="cursor-pointer " v-if="authStore.user">
+        <li
+          class="px-8 py-3 bg-red-500 font-medium text-white text-md md:text-lg rounded-md hover:bg-red-700 transition ease-in-out duration-300 mr-14">
+          Log Out
+        </li>
+      </div>
+      <div v-else class="flex gap-x-4">
         <RouterLink :to="{ name: 'Login' }">
           <li
             class="px-8 py-3 font-medium text-green-500 text-lg text-center border-2 border-green-500 rounded-md hover:bg-green-500 hover:text-white transition ease-linear duration-300">
