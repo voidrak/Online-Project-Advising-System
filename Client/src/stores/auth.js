@@ -29,10 +29,14 @@ export const useAuthStore = defineStore("authStore", {
     async authenticate(apiRoute, formData) {
       const res = await fetch(`/api/${apiRoute}`, {
         method: "post",
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify(formData),
       });
 
       const data = await res.json();
+      console.log(data);
       if (data.errors) {
         this.errors = data.errors;
       } else {
@@ -43,6 +47,8 @@ export const useAuthStore = defineStore("authStore", {
         router.push({ name: "Home" });
       }
     },
+
+
 
     /**************** Logout  ***************/
 
@@ -61,6 +67,30 @@ export const useAuthStore = defineStore("authStore", {
         this.user = null;
         this.errors = {};
         localStorage.removeItem("token");
+        router.push({ name: "Home" });
+      }
+    },
+
+
+    /**************** Register New Student  ***************/
+    async registerRequestForStudent(formData) {
+      const res = await fetch("/api/register", {
+        method: "post",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await res.json();
+      console.log(data);
+      if (data.errors) {
+        this.errors = data.errors;
+      } else {
+        console.log(this.user);
+        this.errors = {};
+        localStorage.setItem("token", data.token);
+        this.user = data.user;
         router.push({ name: "Home" });
       }
     },

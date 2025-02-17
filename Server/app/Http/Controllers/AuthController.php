@@ -10,11 +10,14 @@ class AuthController extends Controller
 {
     public function register(Request $request)
     {
+
         $fields = $request->validate([
             'name' => 'required|max:255',
             'email' => 'required|email|unique:users',
             'password' => 'required|min:8|confirmed ',
         ]);
+
+        $fields['role'] = 'student';
 
         $user =  User::create($fields);
 
@@ -22,8 +25,11 @@ class AuthController extends Controller
 
         return ['user' => $user, 'token' => $token->plainTextToken];
     }
+
+
     public function login(Request $request)
     {
+
         $request->validate([
 
             'email' => 'required|email|exists:users',
