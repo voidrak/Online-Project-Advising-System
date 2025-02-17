@@ -3,9 +3,9 @@
 
 <template>
   <!--start the project-->
-  <div id="main-wrapper" class=" flex p-5 xl:pr-0">
+  <div id="main-wrapper" class=" flex p-5 xl:pr-0 bg-[#f0f5f9]">
     <aside id="application-sidebar-brand"
-      class="hs-overlay hs-overlay-open:translate-x-0 -translate-x-full  transform hidden xl:block xl:translate-x-0 xl:end-auto xl:bottom-0 fixed xl:top-5 xl:left-auto top-0 left-0 with-vertical h-screen z-[999] shrink-0  w-[270px] shadow-md xl:rounded-md rounded-none bg-white left-sidebar   transition-all duration-300">
+      class="hs-overlay hs-overlay-open:translate-x-0 -translate-x-full  transform hidden xl:block xl:translate-x-0 xl:end-auto xl:bottom-0 fixed xl:top-5 xl:left-auto top-0 left-0 with-vertical h-screen z-[999] shrink-0  w-[280px] shadow-md xl:rounded-md rounded-none bg-white left-sidebar   transition-all duration-300">
       <!-- ---------------------------------- -->
       <!-- Start Vertical Layout Sidebar -->
       <!-- ---------------------------------- -->
@@ -36,14 +36,14 @@
 
       <!-- Bottom Upgrade Option -->
       <div class="m-4  relative grid">
-        <button class="text-base font-semibold hover:bg-red-700 btn">Upgrade to Pro</button>
+        <button class="text-base font-semibold hover:bg-red-700 btn">Log Out</button>
       </div>
       <!-- </aside> -->
     </aside>
     <div class=" w-full page-wrapper xl:px-6 px-0">
 
       <!-- Main Content -->
-      <main class="h-full  max-w-full">
+      <main class="h-full  max-w-full  ">
         <div class="container full-container p-0 flex flex-col gap-6">
           <!--  Header Start -->
           <header class=" bg-white shadow-md rounded-md w-full text-sm py-4 px-6">
@@ -66,7 +66,9 @@
           </header>
           <!--  Header End -->
         </div>
-        <slot></slot>
+        <div class=" min-h-[calc(100vh-110px)]">
+          <slot></slot>
+        </div>
       </main>
       <!-- Main Content End -->
 
