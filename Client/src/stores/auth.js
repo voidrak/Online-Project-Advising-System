@@ -44,6 +44,25 @@ export const useAuthStore = defineStore("authStore", {
       }
     },
 
+    /**************** Register New Student  ***************/
+    async registerRequestForStudent(formData) {
+      const res = await fetch(`/api/register/}`, {
+        method: "post",
+        body: JSON.stringify(formData),
+      });
+
+      const data = await res.json();
+      if (data.errors) {
+        this.errors = data.errors;
+      } else {
+        console.log(this.user);
+        this.errors = {};
+        localStorage.setItem("token", data.token);
+        this.user = data.user;
+        router.push({ name: "Home" });
+      }
+    },
+
     /**************** Logout  ***************/
 
     async logout() {

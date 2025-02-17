@@ -13,13 +13,10 @@ const formData = reactive({
   email: "",
   password: "",
   password_confirmation: "",
-  woreda: "Kombolcha",
-  kebele: "",
-  house_number: "",
 });
 
 const submitForm = () => {
-  authStore.authenticate("register", formData);
+  authStore.registerRequestForStudent(formData);
 };
 
 onMounted(() => (errors.value = {}));
@@ -79,8 +76,8 @@ onMounted(() => (errors.value = {}));
           </div>
           <div>
 
-            <div>
-              <button type="submit" class="w-full rounded-md bg-green-500 p-2 mt-8 text-white">
+            <div class="mx-auto w-[250px]">
+              <button type="submit" class="w-full  rounded-md bg-green-500 p-2 mt-8 text-white">
                 Register
               </button>
             </div>
