@@ -38,4 +38,5 @@ import logo from "../assets/image/navbar-logo.svg";
       </div>
     </ul>
   </nav>
+ 
 </template>
