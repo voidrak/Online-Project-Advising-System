@@ -1,5 +1,5 @@
 <script setup>
-import GuestLayout from "@/layout/GuestLayout.vue";
+import UserLayout from '@/layout/UserLayout.vue';
 import { useAuthStore } from "@/stores/auth";
 import { storeToRefs } from "pinia";
 import { onMounted, reactive } from "vue";
@@ -25,7 +25,7 @@ onMounted(() => (errors.value = {}));
 
 <template>
 
-  <GuestLayout>
+  <UserLayout>
     <div class="relative mx-auto grid h-[calc(100vh-90px)] items-center justify-center px-4 py-6">
       <div
         class="max-w-md rounded-lg border border-gray-300 p-6 shadow-[0_2px_22px_-4px_rgba(93,96,127,0.2)] max-md:mx-auto">
@@ -76,7 +76,7 @@ onMounted(() => (errors.value = {}));
 
           <div class="!mt-8">
             <button type="submit"
-              class="w-full rounded-lg bg-blue-600 px-4 py-3 text-sm tracking-wide text-white shadow-xl hover:bg-blue-700 focus:outline-none">
+              class="w-full rounded-lg bg-green-600 px-4 py-3 text-sm tracking-wide text-white shadow-xl hover:bg-green-700 focus:outline-none">
               Log in
             </button>
           </div>
@@ -84,12 +84,12 @@ onMounted(() => (errors.value = {}));
           <RouterLink :to="{ name: 'Register' }">
             <p class="!mt-8 text-center text-sm text-gray-800">
               Do have an account
-              <span class="ml-1 whitespace-nowrap font-semibold text-blue-600 hover:underline">Register here
+              <span class="ml-1 whitespace-nowrap font-semibold text-green-600 hover:underline">Register here
               </span>
             </p>
           </RouterLink>
         </form>
       </div>
     </div>
-  </GuestLayout>
+  </UserLayout>
 </template>
