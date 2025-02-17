@@ -27,17 +27,17 @@ import logo from "../assets/image/navbar-logo.svg"
                 class="font-medium text-green-500 text-lg hover:text-green-300 transition ease-in-out duration-300 mb-5 lg:mb-0">
                 <a href="#">Blog</a>
             </li>
-            <div class="flex gap-x-4">
-                <li
-                    class="px-8 py-3 font-medium text-green-500 text-lg text-center border-2 border-green-500 rounded-md hover:bg-green-500 hover:text-white transition ease-linear duration-300">
-                    <a href="#">Login</a>
-                </li>
-                <li
-                    class="px-8 py-3 bg-green-500 font-medium text-white text-md md:text-lg rounded-md hover:bg-green-700 transition ease-in-out duration-300 mr-14">
-                    <a href="#">Register</a>
-                </li>
-            </div>
 
         </ul>
+        <div class="flex gap-x-4">
+            <li
+                class="px-8 py-3 list-none font-medium text-green-500 text-lg text-center border-2 border-green-500 rounded-md hover:bg-green-500 hover:text-white transition ease-linear duration-300">
+                <a href="#">Login</a>
+            </li>
+            <li
+                class="px-8 py-3 bg-green-500 list-none font-medium text-white text-md md:text-lg rounded-md hover:bg-green-700 transition ease-in-out duration-300 mr-14">
+                <a href="#">Register</a>
+            </li>
+        </div>
     </nav>
 </template>
