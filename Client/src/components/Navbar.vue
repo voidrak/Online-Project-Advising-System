@@ -14,6 +14,10 @@ import logo from "../assets/image/navbar-logo.svg";
     </div>
     <ul class="hidden lg:flex flex-col lg:flex-row lg:items-center lg:space-x-20"
       :class="{ hidden: !navbarOpen, flex: navbarOpen }">
+      <RouterLink :to="{ name: 'Home' }"
+        class="font-medium text-green-500 text-lg hover:text-green-300 transition ease-in-out duration-300 mb-5 lg:mb-0">
+        Home
+      </RouterLink>
       <li
         class="font-medium text-green-500 text-lg hover:text-green-300 transition ease-in-out duration-300 mb-5 lg:mb-0">
         <a href="#">Services</a>
@@ -27,16 +31,20 @@ import logo from "../assets/image/navbar-logo.svg";
         <a href="#">Blog</a>
       </li>
       <div class="flex gap-x-4">
-        <li
-          class="px-8 py-3 font-medium text-green-500 text-lg text-center border-2 border-green-500 rounded-md hover:bg-green-500 hover:text-white transition ease-linear duration-300">
-          Login
-        </li>
-        <li
-          class="px-8 py-3 bg-green-500 font-medium text-white text-md md:text-lg rounded-md hover:bg-green-700 transition ease-in-out duration-300 mr-14">
-          Register
-        </li>
+        <RouterLink :to="{ name: 'Login' }">
+          <li
+            class="px-8 py-3 font-medium text-green-500 text-lg text-center border-2 border-green-500 rounded-md hover:bg-green-500 hover:text-white transition ease-linear duration-300">
+            Login
+          </li>
+        </RouterLink>
+        <RouterLink :to="{ name: 'Register' }">
+          <li
+            class="px-8 py-3 bg-green-500 font-medium text-white text-md md:text-lg rounded-md hover:bg-green-700 transition ease-in-out duration-300 mr-14">
+            Register
+          </li>
+        </RouterLink>
       </div>
     </ul>
   </nav>
- 
+
 </template>
