@@ -18,7 +18,9 @@ class AuthController extends Controller
             'department' => 'required|string'
         ]);
 
+
         $fields['role'] = 'student';
+
 
         $user =  User::create($fields);
 

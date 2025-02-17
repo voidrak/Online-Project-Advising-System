@@ -10,9 +10,8 @@ class UserController extends Controller
 
     public function getRegisterRequests()
     {
-        $registerRequests = User::where('approved', false)->get();
 
-        return response()->json($registerRequests);
+        return   User::where('approved', false)->get();
     }
 
     public function approveStudentRegistration(User $user)
