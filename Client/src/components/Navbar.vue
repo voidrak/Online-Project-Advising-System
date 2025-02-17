@@ -3,6 +3,7 @@ import logo from "../assets/image/navbar-logo.svg";
 </script>
 
 <template>
+
   <nav class="flex-wrap lg:flex items-center justify-between mb-5 lg:mb-10" x-data="{navbarOpen:false}">
     <div class="flex items-center justify-between mb-10 lg:mb-0">
       <img :src="logo" alt="Logo" />
@@ -46,5 +47,6 @@ import logo from "../assets/image/navbar-logo.svg";
       </div>
     </ul>
   </nav>
+
 
 </template>
