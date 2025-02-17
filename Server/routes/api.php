@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\UserController;
+use App\Http\Middleware\AdminMiddleware;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -11,7 +13,10 @@ Route::get('/user', function (Request $request) {
 
 
 
-
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/admin/register-request', [UserController::class, 'getRegisterRequests'])->middleware(AdminMiddleware::class);
+    Route::put('/admin/approve-register/{user}', [UserController::class, 'approveStudentRegistration'])->middleware(AdminMiddleware::class);
+});
 
 
 

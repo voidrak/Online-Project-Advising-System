@@ -15,6 +15,7 @@ class AuthController extends Controller
             'name' => 'required|max:255',
             'email' => 'required|email|unique:users',
             'password' => 'required|min:8|confirmed ',
+            'department' => 'required|string'
         ]);
 
         $fields['role'] = 'student';
