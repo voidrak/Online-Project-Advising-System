@@ -29,7 +29,9 @@ export const useAuthStore = defineStore("authStore", {
     async authenticate(apiRoute, formData) {
       const res = await fetch(`/api/${apiRoute}`, {
         method: "post",
-        "Content-Type": "application/json",
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify(formData),
       });
 
@@ -45,6 +47,30 @@ export const useAuthStore = defineStore("authStore", {
         router.push({ name: "Home" });
       }
     },
+
+
+
+    /**************** Logout  ***************/
+
+    async logout() {
+      const res = await fetch("/api/logout", {
+        method: "post",
+        headers: {
+          authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+
+      const data = await res.json();
+      console.log(data);
+
+      if (res.ok) {
+        this.user = null;
+        this.errors = {};
+        localStorage.removeItem("token");
+        router.push({ name: "Home" });
+      }
+    },
+
 
     /**************** Register New Student  ***************/
     async registerRequestForStudent(formData) {
@@ -65,27 +91,6 @@ export const useAuthStore = defineStore("authStore", {
         this.errors = {};
         localStorage.setItem("token", data.token);
         this.user = data.user;
-        router.push({ name: "Home" });
-      }
-    },
-
-    /**************** Logout  ***************/
-
-    async logout() {
-      const res = await fetch("/api/logout", {
-        method: "post",
-        headers: {
-          authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      });
-
-      const data = await res.json();
-      console.log(data);
-
-      if (res.ok) {
-        this.user = null;
-        this.errors = {};
-        localStorage.removeItem("token");
         router.push({ name: "Home" });
       }
     },
