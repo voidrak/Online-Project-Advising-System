@@ -5,7 +5,7 @@ import UserLayout from '@/layout/UserLayout.vue';
 import { useAuthStore } from "@/stores/auth";
 import { storeToRefs } from "pinia";
 
-const authStore = useAuthStore();
+const {registerRequestForStudent} = useAuthStore();
 const { errors } = storeToRefs(useAuthStore());
 
 const formData = reactive({
@@ -16,7 +16,8 @@ const formData = reactive({
 });
 
 const submitForm = () => {
-  authStore.registerRequestForStudent(formData);
+  console.log(formData);
+  registerRequestForStudent(formData);
 };
 
 onMounted(() => (errors.value = {}));

@@ -29,10 +29,12 @@ export const useAuthStore = defineStore("authStore", {
     async authenticate(apiRoute, formData) {
       const res = await fetch(`/api/${apiRoute}`, {
         method: "post",
+        "Content-Type": "application/json",
         body: JSON.stringify(formData),
       });
 
       const data = await res.json();
+      console.log(data);
       if (data.errors) {
         this.errors = data.errors;
       } else {
@@ -46,12 +48,16 @@ export const useAuthStore = defineStore("authStore", {
 
     /**************** Register New Student  ***************/
     async registerRequestForStudent(formData) {
-      const res = await fetch(`/api/register/}`, {
+      const res = await fetch("/api/register", {
         method: "post",
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify(formData),
       });
 
       const data = await res.json();
+      console.log(data);
       if (data.errors) {
         this.errors = data.errors;
       } else {
