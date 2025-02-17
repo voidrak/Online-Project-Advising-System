@@ -5,7 +5,7 @@ import UserLayout from '@/layout/UserLayout.vue';
 import { useAuthStore } from "@/stores/auth";
 import { storeToRefs } from "pinia";
 
-const {registerRequestForStudent} = useAuthStore();
+const { registerRequestForStudent } = useAuthStore();
 const { errors } = storeToRefs(useAuthStore());
 
 const formData = reactive({
@@ -13,7 +13,15 @@ const formData = reactive({
   email: "",
   password: "",
   password_confirmation: "",
+  department: "",
 });
+
+const departments = [
+  "Information System",
+  "Information Technology",
+  "Software Engineering",
+  "Computer Science",
+];
 
 const submitForm = () => {
   console.log(formData);
@@ -72,6 +80,21 @@ onMounted(() => (errors.value = {}));
 
               <p v-if="errors.password_confirmation" class="text-sm text-red-500">
                 {{ errors.password_confirmation[0] }}
+              </p>
+            </div>
+
+            <!-- Department Select -->
+            <div>
+              <label for="department" class="mb-2 block text-sm text-gray-800">Department</label>
+              <select v-model="formData.department" id="department" name="department"
+                class="w-full rounded-md border border-gray-300 bg-white px-4 py-3 text-sm text-gray-800 outline-bg-light-green">
+                <option value="" disabled>Select Department</option>
+                <option v-for="department in departments" :key="department" :value="department">
+                  {{ department }}
+                </option>
+              </select>
+              <p v-if="errors.department" class="text-sm text-red-500">
+                {{ errors.department[0] }}
               </p>
             </div>
           </div>
