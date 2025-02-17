@@ -1,4 +1,5 @@
 <script setup>
+
 import UserLayout from '@/layout/UserLayout.vue';
 import heroImage from "@/assets/image/home-img.svg"
 </script>
@@ -34,4 +35,5 @@ import heroImage from "@/assets/image/home-img.svg"
 
     </section>
   </UserLayout>
+
 </template>
