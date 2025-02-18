@@ -1,5 +1,7 @@
 <script setup>
-import AdminLayout from '@/layout/AdminLayout.vue';
+
+import ApproveProjectPopover from '@/components/Coordinator/ApproveProjectPopover.vue';
+import CoordinatorLayout from '@/layout/CoordinatorLayout.vue';
 import { useProjectStore } from '@/stores/project';
 
 
@@ -8,14 +10,13 @@ import { onMounted, ref } from 'vue';
 
 const { getProjectRequests } = useProjectStore()
 const { deleteProject } = useProjectStore()
-const { approveProject } = useProjectStore()
 
 const projects = ref([]);
 const searchQuery = ref("")
 
 onMounted(async () => {
   projects.value = await getProjectRequests();
-  console.log(projects.value);
+  // console.log(projects.value);
 })
 
 const handleDelete = async (project) => {
@@ -23,16 +24,19 @@ const handleDelete = async (project) => {
   projects.value = await getProjectRequests();
 
 }
-const handleApprove = async (project) => {
-  approveProject(project);
+const handleUpdate = async () => {
   projects.value = await getProjectRequests();
 
 }
 
+
+
+
 </script>
 
 <template>
-  <AdminLayout>
+  <CoordinatorLayout>
+
     <div v-if="projects" class="">
       <h1 class="text-center py-8 font-bold text-4xl text-blue-700">Project Requests
       </h1>
@@ -101,10 +105,13 @@ const handleApprove = async (project) => {
             <td class="px-6 py-4 whitespace-nowrap  text-sm font-medium flex">
               <button @click.prevent="handleDelete(project.id)"
                 class="ml-2 bg-red-500 text-white hover:bg-red-600 w-24  px-2 rounded-md py-[10px] ">Delete</button>
-              <button @click.prevent="handleApprove(project.id)"
-                class="ml-2 bg-green-500 text-white hover:bg-green-600  px-2 rounded-md py-[10px] ">Approve
-                Request</button>
-              <!-- <button class="ml-2 bg-green-500 text-white hover:bg-green-600  px-1 rounded-md py-[5px] ">Update</button> -->
+
+              <ApproveProjectPopover @handleUpdate="handleUpdate" :projectId="project.id" />
+
+              <!-- <button @click.prevent="handleApprove(project.id)"
+                class="ml-2 bg-green-500 text-white hover:bg-green-600  px-2 rounded-md py-[10px] ">Approve Request
+              </button> -->
+
             </td>
           </tr>
 
@@ -113,5 +120,5 @@ const handleApprove = async (project) => {
         </tbody>
       </table>
     </div>
-  </AdminLayout>
+  </CoordinatorLayout>
 </template>

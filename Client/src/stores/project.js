@@ -94,16 +94,18 @@ export const useProjectStore = defineStore("projectStore", {
         return data;
       }
     },
- 
+
 
     /****************  Approve Student Register  ***************/
-    async approveProject(projectId) {
+    async approveProject(projectId, formData) {
       const res = await fetch(`/api/approve-project/${projectId}`, {
         method: 'PUT',
         headers: {
           authorization: `Bearer ${localStorage.getItem("token")}`,
           "Content-Type": "application/json",
         },
+        body: JSON.stringify(formData),
+
       });
 
       const data = res.status !== 204 ? await res.json() : {};
@@ -118,7 +120,4 @@ export const useProjectStore = defineStore("projectStore", {
 
   }
 
- 
-  },
- 
 });

@@ -28,7 +28,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/projects', [ProjectController::class, 'index']);
     Route::get('/coordinator/project-requests', [ProjectController::class, 'getProjectRequests']);
     Route::get('/admin/ongoing-projects', [ProjectController::class, 'getAllOngoingProjects']);
-    Route::get('/approve-project/{project}', [ProjectController::class, 'show']);
+    Route::put('/approve-project/{project}', [ProjectController::class, 'approveProject']);
     Route::post('/projects', [ProjectController::class, 'store']);
     Route::put('/projects/{project}', [ProjectController::class, 'update']);
     Route::delete('admin/projects/{project}', [ProjectController::class, 'destroy'])->middleware(AdminMiddleware::class);

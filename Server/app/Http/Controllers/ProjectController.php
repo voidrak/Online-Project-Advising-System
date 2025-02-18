@@ -38,7 +38,7 @@ class ProjectController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    { 
+    {
         $validatedData = $request->validate([
             'project_title' => 'required|string|max:255',
             'description' => 'nullable|string',
@@ -52,10 +52,8 @@ class ProjectController extends Controller
             $validatedData['document'] = $path;
         }
 
-   
-        return $request->user()->projects()->create($validatedData);
-       
 
+        return $request->user()->projects()->create($validatedData);
     }
 
     /**
@@ -106,8 +104,15 @@ class ProjectController extends Controller
         return response()->json(['message' => 'Project deleted successfully']);
     }
 
-    public function approveProject(Project $project)
+    public function approveProject(Request $request, Project $project)
     {
+        $validatedData = $request->validate([
+            'advisor_id' => 'required|exists:users,id',
+            'due_date' => 'required|date',
+        ]);
+
+        $project->advisor_id = $validatedData['advisor_id'];
+        $project->due_date = $validatedData['due_date'];
         $project->approved = true;
         $project->save();
 
