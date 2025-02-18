@@ -8,7 +8,29 @@ export const useProjectStore = defineStore("projectStore", {
     };
   },
   actions: {
-    /************************ Get All Projects   **************** */
+
+
+    /************************ Get Project Request   **************** */
+    async getProjectRequests() {
+      const res = await fetch('/api/coordinator/project-requests', {
+        method: 'GET',
+        headers: {
+          authorization: `Bearer ${localStorage.getItem("token")}`,
+          "Content-Type": "application/json",
+        },
+      });
+
+      const data = res.status !== 204 ? await res.json() : {};
+      console.log(data);
+
+      if (data.errors) {
+        this.errors = data.errors;
+      } else {
+        return data;
+      }
+    },
+    /************************ Get All Ongoing Projects   **************** */
+
     async getAllOngoingProjects() {
       const res = await fetch("/api/admin/ongoing-projects", {
         method: "GET",
@@ -72,5 +94,31 @@ export const useProjectStore = defineStore("projectStore", {
         return data;
       }
     },
+ 
+
+    /****************  Approve Student Register  ***************/
+    async approveProject(projectId) {
+      const res = await fetch(`/api/approve-project/${projectId}`, {
+        method: 'PUT',
+        headers: {
+          authorization: `Bearer ${localStorage.getItem("token")}`,
+          "Content-Type": "application/json",
+        },
+      });
+
+      const data = res.status !== 204 ? await res.json() : {};
+      console.log(data);
+
+      if (data.errors) {
+        this.errors = data.errors;
+      } else {
+        return data;
+      }
+    },
+
+  }
+
+ 
   },
+ 
 });

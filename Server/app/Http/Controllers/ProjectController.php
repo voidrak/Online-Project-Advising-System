@@ -18,6 +18,15 @@ class ProjectController extends Controller
         return response()->json($projects);
     }
 
+    /**
+     * Get project requests (projects with approved = false).
+     */
+    public function getProjectRequests()
+    {
+        $projects = Project::where('approved', false)->with('student')->get();
+        return response()->json($projects);
+    }
+
 
     public function getAllOngoingProjects()
     {
@@ -36,7 +45,6 @@ class ProjectController extends Controller
             // 'student_id' => 'required|exists:users,student_id',
             'department' => 'required|string|max:255',
             'document' => 'nullable|file|mimes:pdf,doc,docx,jpeg,png|max:6048',
-            'due_date' => 'nullable|date',
         ]);
 
         if ($request->hasFile('document')) {
@@ -44,9 +52,10 @@ class ProjectController extends Controller
             $validatedData['document'] = $path;
         }
 
-        // $project = Project::create($validatedData);
+   
         return $request->user()->projects()->create($validatedData);
-        // return response()->json($project, 201);
+       
+
     }
 
     /**
@@ -95,5 +104,13 @@ class ProjectController extends Controller
         $project->delete();
 
         return response()->json(['message' => 'Project deleted successfully']);
+    }
+
+    public function approveProject(Project $project)
+    {
+        $project->approved = true;
+        $project->save();
+
+        return response()->json(['message' => 'Project approved successfully']);
     }
 }
