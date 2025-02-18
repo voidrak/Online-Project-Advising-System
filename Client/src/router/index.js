@@ -9,6 +9,7 @@ import Create from '@/views/Project/Create.vue';
 import UnApprovedStudentHome from '@/views/User/UnApprovedStudentHome.vue';
 import AddCoordinator from '@/views/Admin/AddCoordinator.vue';
 import AddAdvisor from '@/views/Admin/AddAdvisor.vue';
+import AdminOngoingProjects from '@/views/Admin/AdminOngoingProjects.vue';
 
 
 const router = createRouter({
@@ -62,6 +63,12 @@ const router = createRouter({
       path: '/admin/register-Advisor',
       name: 'AddAdvisor',
       component: AddAdvisor,
+      meta: { admin: true },
+    },
+    {
+      path: '/admin/ongoing-projects',
+      name: 'AdminOngoingProjects',
+      component: AdminOngoingProjects,
       meta: { admin: true },
     },
 

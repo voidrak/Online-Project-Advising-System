@@ -18,6 +18,13 @@ class ProjectController extends Controller
         return response()->json($projects);
     }
 
+
+    public function getAllOngoingProjects()
+    {
+        $projects = Project::where('completed', false)->with('student', 'advisor')->get();
+        return response()->json($projects);
+    }
+
     /**
      * Store a newly created resource in storage.
      */
@@ -29,7 +36,6 @@ class ProjectController extends Controller
             'project_title' => 'required|string|max:255',
             'description' => 'nullable|string',
             'student_id' => 'required|exists:users,student_id',
-            'advisor_id' => 'required|exists:users,id',
             'department' => 'required|string|max:255',
             'document' => 'nullable|string|max:255',
             'due_date' => 'nullable|date',

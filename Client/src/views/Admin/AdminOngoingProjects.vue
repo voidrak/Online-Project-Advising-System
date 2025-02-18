@@ -1,35 +1,36 @@
 <script setup>
 import AdminLayout from '@/layout/AdminLayout.vue';
+import { useProjectStore } from '@/stores/project';
 
-import { useUserStore } from '@/stores/user';
+
 import { computed, onMounted, reactive, ref } from 'vue';
 
-const { getAllUsers } = useUserStore()
-const { deleteUser } = useUserStore()
+const { getAllOngoingProjects } = useProjectStore()
+const { deleteProject } = useProjectStore()
 
-const users = ref([]);
+const onGoingProject = ref([]);
 const searchQuery = ref("")
 
 onMounted(async () => {
-  users.value = await getAllUsers();
-  // console.log(users.value);
+  onGoingProject.value = await getAllOngoingProjects();
+  console.log(onGoingProject.value);
 })
 
-const handleDelete = async (user) => {
-  deleteUser(user);
-  users.value = await getAllUsers();
+const handleDelete = async (project) => {
+  deleteProject(project);
+  onGoingProject.value = await getAllOngoingProjects();
 
 }
 
-const filteredUsers = computed(() => {
+const filteredOngoingProject = computed(() => {
   if (!searchQuery.value) {
-    return users.value;
+    return onGoingProject.value;
   }
   const searchTerm = searchQuery.value.toLowerCase();
-  return users.value.filter(user =>
-    user.name.toLowerCase().includes(searchTerm) ||
-    user.role.toLowerCase().includes(searchTerm) ||
-    user.department.toLowerCase().includes(searchTerm)
+  return onGoingProject.value.filter(project =>
+    project.name.toLowerCase().includes(searchTerm) ||
+    project.role.toLowerCase().includes(searchTerm) ||
+    project.department.toLowerCase().includes(searchTerm)
   );
 });
 
@@ -37,8 +38,8 @@ const filteredUsers = computed(() => {
 
 <template>
   <AdminLayout>
-    <div v-if="users" class="">
-      <h1 class="text-center py-8 font-bold text-4xl text-blue-700">Users
+    <div v-if="onGoingProject" class="">
+      <h1 class="text-center py-8 font-bold text-4xl text-blue-700">Ongoing Projects
       </h1>
 
       <div class="pt-2 relative pl-6 py-4 max-w-screen-md  text-gray-600">
@@ -79,29 +80,29 @@ const filteredUsers = computed(() => {
           </tr>
         </thead>
         <tbody class="bg-white divide-y divide-gray-200">
-          <tr v-for="(user, index) in filteredUsers" :key="index">
+          <tr v-for="(project, index) in filteredOngoingProject" :key="index">
             <td class="px-6 py-4 whitespace-nowrap">
               <div class="flex items-center">
 
                 <div class="ml-4">
                   <div class="text-sm font-medium text-gray-900">
-                    {{ user.name }}
+                    {{ project.project_title }}
                   </div>
                 </div>
               </div>
             </td>
             <td class="px-6 py-4 whitespace-nowrap">
-              <div class="text-sm text-gray-900">{{ user.department }} </div>
+              <div class="text-sm text-gray-900">{{ project.department }} </div>
 
             </td>
             <td class="px-6 py-4 whitespace-nowrap">
-              {{ user.email }}
+              {{ project.email }}
             </td>
             <td class="px-6 py-4 whitespace-nowrap">
-              {{ user.role }}
+              {{ project.role }}
             </td>
             <td class="px-6 py-4 whitespace-nowrap  text-sm font-medium flex">
-              <button @click.prevent="handleDelete(user.id)"
+              <button @click.prevent="handleDelete(project.id)"
                 class="ml-2 bg-red-500 text-white hover:bg-red-600  px-1 rounded-md py-[5px] ">Delete</button>
               <!-- <button class="ml-2 bg-green-500 text-white hover:bg-green-600  px-1 rounded-md py-[5px] ">Update</button> -->
             </td>
