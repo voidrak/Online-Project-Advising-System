@@ -29,21 +29,24 @@ class ProjectController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
-
-
+    { 
         $validatedData = $request->validate([
             'project_title' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'student_id' => 'required|exists:users,student_id',
+            // 'student_id' => 'required|exists:users,student_id',
             'department' => 'required|string|max:255',
-            'document' => 'nullable|string|max:255',
+            'document' => 'nullable|file|mimes:pdf,doc,docx,jpeg,png|max:6048',
             'due_date' => 'nullable|date',
-            'approved' => 'boolean',
         ]);
-        $project = Project::create($validatedData);
 
-        return response()->json($project, 201);
+        if ($request->hasFile('document')) {
+            $path = $request->file('document')->store('documents', 'public');
+            $validatedData['document'] = $path;
+        }
+
+        // $project = Project::create($validatedData);
+        return $request->user()->projects()->create($validatedData);
+        // return response()->json($project, 201);
     }
 
     /**
@@ -65,10 +68,19 @@ class ProjectController extends Controller
             'student_id' => 'required|exists:users,student_id',
             'advisor_id' => 'required|exists:users,id',
             'department' => 'required|string|max:255',
-            'document' => 'nullable|string|max:255',
+            'document' => 'nullable|file|mimes:pdf,doc,docx,jpeg,png|max:2048',
             'due_date' => 'nullable|date',
             'approved' => 'boolean',
+            'completed' => 'boolean',
         ]);
+
+        $validatedData['approved'] = filter_var($validatedData['approved'], FILTER_VALIDATE_BOOLEAN);
+        $validatedData['completed'] = filter_var($validatedData['completed'], FILTER_VALIDATE_BOOLEAN);
+
+        if ($request->hasFile('document')) {
+            $path = $request->file('document')->store('documents', 'public');
+            $validatedData['document'] = $path;
+        }
 
         $project->update($validatedData);
 
