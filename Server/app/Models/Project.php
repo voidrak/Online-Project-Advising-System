@@ -19,6 +19,7 @@ class Project extends Model
         'document',
         'due_date',
         'approved',
+        'completed'
     ];
 
 
