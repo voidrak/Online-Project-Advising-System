@@ -5,6 +5,7 @@ import LoginPage from '@/views/Auth/LoginPage.vue';
 import RegisterPage from '@/views/Auth/RegisterPage.vue';
 import AdminHome from '@/views/Admin/AdminHome.vue';
 import AdminRegistrationRequest from '@/views/Admin/AdminRegistrationRequest.vue';
+import Create from '@/views/Project/Create.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -15,7 +16,12 @@ const router = createRouter({
       component: HomeView,
       meta: { welcome: true },
     },
-
+    {
+      path: '/createProject',
+      name: 'createProject', 
+      component: Create, 
+      
+    },
     {
       path: '/login',
       name: 'Login',

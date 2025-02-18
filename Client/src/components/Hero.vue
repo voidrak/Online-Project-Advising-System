@@ -15,9 +15,9 @@ import heroImage from "@/assets/image/home-img.svg"
                 designs.</p>
 
             <div class="flex items-center justify-center lg:justify-start">
-                <a href="#"
-                    class="px-8 py-3 bg-green-500 font-medium text-white text-md md:text-lg rounded-md hover:bg-green-700 transition ease-in-out duration-300 mr-14">Get
-                    Started</a>
+                <RouterLink :to="{ name: 'createProject' }"
+                    class="px-8 py-3 bg-green-500 font-medium text-white text-md md:text-lg rounded-md hover:bg-green-700 transition ease-in-out duration-300 mr-14">
+                    Create Project</RouterLink>
 
                 <a href="#"
                     class="px-8 py-3 font-medium text-green-500 text-lg text-center border-2 border-green-500 rounded-md hover:bg-green-500 hover:text-white transition ease-linear duration-300">Register</a>
