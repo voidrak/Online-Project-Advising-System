@@ -6,6 +6,7 @@ import RegisterPage from '@/views/Auth/RegisterPage.vue';
 import AdminHome from '@/views/Admin/AdminHome.vue';
 import AdminRegistrationRequest from '@/views/Admin/AdminRegistrationRequest.vue';
 import UnApprovedStudentHome from '@/views/User/UnApprovedStudentHome.vue';
+import AddCoordinator from '@/views/Admin/AddCoordinator.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -42,11 +43,19 @@ const router = createRouter({
       meta: { admin: true },
     },
     {
+      path: '/admin/register-coordinator',
+      name: 'AddCoordinator',
+      component: AddCoordinator,
+      meta: { admin: true },
+    },
+
+    {
       path: '/unApprovedStudent',
       name: 'UnApprovedStudent',
       component: UnApprovedStudentHome,
       meta: { UnApprovedStudent: true },
     },
+
 
 
   ],
