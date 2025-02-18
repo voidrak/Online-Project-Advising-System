@@ -10,14 +10,8 @@ const authStore = useAuthStore()
   <nav class="flex-wrap lg:flex items-center justify-between mb-5 lg:mb-10" x-data="{navbarOpen:false}">
     <div class="flex items-center justify-between mb-10 lg:mb-0">
       <img :src="logo" alt="Logo" />
-      <button
-        class="flex items-center justify-center border border-green-500 w-10 h-10 text-green-500 rounded-md outline-none lg:hidden ml-auto"
-        @click="navbarOpen = !navbarOpen">
-        <i data-feather="menu"></i>
-      </button>
     </div>
-    <ul class="hidden lg:flex flex-col lg:flex-row lg:items-center lg:space-x-20"
-      :class="{ hidden: !navbarOpen, flex: navbarOpen }">
+    <ul class="hidden lg:flex flex-col lg:flex-row lg:items-center lg:space-x-20">
       <RouterLink :to="{ name: 'Home' }"
         class="font-medium text-green-500 text-lg hover:text-green-300 transition ease-in-out duration-300 mb-5 lg:mb-0">
         Home

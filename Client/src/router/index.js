@@ -10,6 +10,7 @@ import UnApprovedStudentHome from '@/views/User/UnApprovedStudentHome.vue';
 import AddCoordinator from '@/views/Admin/AddCoordinator.vue';
 import AddAdvisor from '@/views/Admin/AddAdvisor.vue';
 import AdminOngoingProjects from '@/views/Admin/AdminOngoingProjects.vue';
+import CoordinatorHome from '@/views/Coordinator/CoordinatorHome.vue';
 
 
 const router = createRouter({
@@ -78,6 +79,12 @@ const router = createRouter({
       component: UnApprovedStudentHome,
       meta: { UnApprovedStudent: true },
     },
+    {
+      path: '/coordinator',
+      name: 'CoordinatorHome',
+      component: CoordinatorHome,
+      meta: { coordinator: true },
+    },
 
 
 
@@ -103,6 +110,19 @@ router.beforeEach(async (to, from) => {
   }
   if (authStore.user?.role === "student" && !authStore.user?.approved && to.meta.guest) {
     return { name: "UnApprovedStudent" };
+  }
+
+  if (authStore.user?.role === "coordinator" && to.meta.guest) {
+    return { name: "CoordinatorHome" };
+  }
+  if (authStore.user?.role === "coordinator" && to.meta.auth) {
+    return { name: "CoordinatorHome" };
+  }
+  if (authStore.user?.role === "coordinator" && to.meta.welcome) {
+    return { name: "CoordinatorHome" };
+  }
+  if (authStore.user?.role === "coordinator" && to.meta.admin) {
+    return { name: "CoordinatorHome" };
   }
 
   if (authStore.user?.role === 'admin' && !to.meta.admin) {
