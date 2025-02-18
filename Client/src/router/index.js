@@ -8,6 +8,7 @@ import AdminRegistrationRequest from '@/views/Admin/AdminRegistrationRequest.vue
 import Create from '@/views/Project/Create.vue';
 import UnApprovedStudentHome from '@/views/User/UnApprovedStudentHome.vue';
 import AddCoordinator from '@/views/Admin/AddCoordinator.vue';
+import AddAdvisor from '@/views/Admin/AddAdvisor.vue';
 
 
 const router = createRouter({
@@ -21,9 +22,11 @@ const router = createRouter({
     },
     {
       path: '/createProject',
-      name: 'createProject', 
-      component: Create, 
-      
+      name: 'createProject',
+      component: Create,
+      meta: { auth: true },
+
+
     },
     {
       path: '/login',
@@ -53,6 +56,12 @@ const router = createRouter({
       path: '/admin/register-coordinator',
       name: 'AddCoordinator',
       component: AddCoordinator,
+      meta: { admin: true },
+    },
+    {
+      path: '/admin/register-Advisor',
+      name: 'AddAdvisor',
+      component: AddAdvisor,
       meta: { admin: true },
     },
 

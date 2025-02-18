@@ -6,7 +6,7 @@ import { reactive, ref, onMounted } from 'vue';
 
 
 
-const { registerCoordinator } = useUserStore()
+const { registerAdvisor } = useUserStore()
 const { errors } = storeToRefs(useUserStore());
 const formData = reactive({
   name: "",
@@ -26,7 +26,7 @@ const departments = [
 
 const submitForm = () => {
   console.log(formData);
-  registerCoordinator(formData);
+  registerAdvisor(formData);
 };
 
 onMounted(() => (errors.value = {}));
@@ -39,7 +39,7 @@ onMounted(() => (errors.value = {}));
       <div class="space-y-0">
         <div class="border-b border-gray-900/10 pb-12">
           <div class="border-b border-gray-900/10 py-2">
-            <h2 class="text-base/7 font-semibold text-green-500">Register New Coordinator</h2>
+            <h2 class="text-base/7 font-semibold text-green-500">Register New Advisor</h2>
           </div>
           <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 mx-auto  ">
             <div class="max-w-sm">
