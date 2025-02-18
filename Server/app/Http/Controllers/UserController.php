@@ -55,4 +55,12 @@ class UserController extends Controller
     {
         $user->delete();
     }
+
+    public function getAdvisors()
+    {
+        $advisors = User::where('role', 'advisor')->get();
+        return response()->json($advisors);
+    }
+
+
 }

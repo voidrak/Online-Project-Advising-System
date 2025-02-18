@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\AdminMiddleware;
 use Illuminate\Http\Request;
@@ -21,11 +22,15 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('/admin/users/{user}', [UserController::class, 'destroy']);
 });
 
-
-
-
-
-
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/advisors', [UserController::class, 'getAdvisors']);
+        // Project routes
+        Route::get('/projects', [ProjectController::class, 'index']);
+        Route::post('/projects', [ProjectController::class, 'store']);
+    Route::get('/projects/{project}', [ProjectController::class, 'show']);
+    Route::put('/projects/{project}', [ProjectController::class, 'update']);
+    Route::delete('/projects/{project}', [ProjectController::class, 'destroy']);
+});
 
 
 
