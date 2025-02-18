@@ -15,8 +15,7 @@
 #NAHOM
 
 -  Implement student registration with admin approval and  ID generation 
-
-
+- Implement the functionality to add advisors and coordinators 
 
 
 

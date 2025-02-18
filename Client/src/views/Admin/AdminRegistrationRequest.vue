@@ -60,7 +60,10 @@ const handleApprove = async (user) => {
               name
             </th>
             <th scope="col" class="px-6 py-3 text-left text-xs font-bold  uppercase tracking-wider">
-              User Phone Number
+              Department
+            </th>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-bold  uppercase tracking-wider">
+              Student Id
             </th>
             <th scope="col" class="px-6 py-3 text-left text-xs font-bold  uppercase tracking-wider">
               email
@@ -84,6 +87,10 @@ const handleApprove = async (user) => {
             </td>
             <td class="px-6 py-4 whitespace-nowrap">
               <div class="text-sm text-gray-900">{{ user.department }} </div>
+
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap">
+              <div class="text-sm text-gray-900">{{ user.student_id }} </div>
 
             </td>
             <td class="px-6 py-4 whitespace-nowrap">
