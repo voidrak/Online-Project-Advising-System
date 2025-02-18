@@ -6,6 +6,7 @@ export const useUserStore = defineStore("userStore", {
     return {
       errors: {},
       user: null,
+      advisors: [], 
     };
   },
   // getters: {},
@@ -51,5 +52,33 @@ export const useUserStore = defineStore("userStore", {
         return data;
       }
     },
+
+    /********************* Get Advisor *****************************/
+    async getAdvisors() {
+      try {
+        const res = await fetch('/api/advisors', {
+          method: 'GET',
+          headers: {
+            authorization: `Bearer ${localStorage.getItem("token")}`,
+            "Content-Type": "application/json",
+          },
+        });
+        const data = await res.json();
+        console.log(data);
+        if (data.errors) {
+          this.errors = data.errors;
+        } else {
+          this.advisors = data.map(advisor => ({
+            id: advisor.id,
+            name: advisor.name
+          }));
+          console.log(this.advisors);
+        }
+      } catch (error) {
+        console.error('Error fetching advisors:', error);
+        this.errors = { fetch: 'Failed to fetch advisors' };
+      }
+    },
+
   },
 });

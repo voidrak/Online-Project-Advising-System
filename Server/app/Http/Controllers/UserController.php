@@ -26,4 +26,11 @@ class UserController extends Controller
 
         return response()->json(['message' => 'Student registration approved successfully']);
     }
+
+    public function getAdvisors()
+    {
+        $advisors = User::where('role', 'advisor')->get();
+        return response()->json($advisors);
+    }
+
 }
