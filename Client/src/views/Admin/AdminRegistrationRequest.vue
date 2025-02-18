@@ -6,7 +6,7 @@ import { onMounted, ref } from 'vue';
 
 
 const { getRegisterRequests } = useUserStore()
-// const { deleteUser } = useUserStore()
+const { deleteUser } = useUserStore()
 const { approveStudentRegistration } = useUserStore()
 
 const users = ref([]);
@@ -97,11 +97,11 @@ const handleApprove = async (user) => {
               {{ user.email }}
             </td>
             <td class="px-6 py-4 whitespace-nowrap  text-sm font-medium flex">
-              <!-- <button @click.prevent="handleDelete(user.id)"
-                class="ml-2 bg-red-500 text-white hover:bg-red-600 w-24  px-2 rounded-md py-[10px] ">Delete</button> -->
+              <button @click.prevent="handleDelete(user.id)"
+                class="ml-2 bg-red-500 text-white hover:bg-red-600 w-24  px-2 rounded-md py-[10px] ">Delete</button>
               <button @click.prevent="handleApprove(user.id)"
                 class="ml-2 bg-green-500 text-white hover:bg-green-600  px-2 rounded-md py-[10px] ">Approve
-                Provider</button>
+                Request</button>
               <!-- <button class="ml-2 bg-green-500 text-white hover:bg-green-600  px-1 rounded-md py-[5px] ">Update</button> -->
             </td>
           </tr>
