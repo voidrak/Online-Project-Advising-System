@@ -17,10 +17,14 @@ onMounted(async () => {
   console.log(users.value);
 })
 
-const handleDelete = async (user) => {
-  deleteUser(user);
-  users.value = await getRegisterRequests();
-
+const handleDelete = async (userId) => {
+  try {
+    await deleteUser(userId);
+    users.value = await getRegisterRequests();
+  } catch (error) {
+    console.error("Error deleting user:", error);
+    // Display an error message to the user
+  }
 }
 const handleApprove = async (user) => {
   approveStudentRegistration(user);
