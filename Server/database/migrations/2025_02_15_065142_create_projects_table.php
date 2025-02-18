@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('document')->nullable();
             $table->date('due_date')->nullable();
             $table->boolean('approved')->default(false);
+            $table->boolean('completed')->default(false);
             $table->timestamps();
         });
     }

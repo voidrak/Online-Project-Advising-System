@@ -25,12 +25,12 @@ Route::middleware('auth:sanctum')->group(function () {
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/advisors', [UserController::class, 'getAdvisors']);
-    // Project routes
     Route::get('/projects', [ProjectController::class, 'index']);
+    Route::get('/admin/ongoing-projects', [ProjectController::class, 'getAllOngoingProjects']);
     Route::post('/projects', [ProjectController::class, 'store']);
     Route::get('/projects/{project}', [ProjectController::class, 'show']);
     Route::put('/projects/{project}', [ProjectController::class, 'update']);
-    Route::delete('/projects/{project}', [ProjectController::class, 'destroy']);
+    Route::delete('admin/projects/{project}', [ProjectController::class, 'destroy'])->middleware(AdminMiddleware::class);
 });
 
 
