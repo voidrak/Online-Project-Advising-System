@@ -49,6 +49,20 @@ class UserController extends Controller
 
         return   User::create($fields);
     }
+    public function registerAdvisor(Request $request)
+    {
+        $fields = $request->validate([
+            'name' => 'required|max:255',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|min:8|confirmed ',
+            'department' => 'required|string',
+        ]);
+
+        $fields['role'] = 'advisor';
+        $fields['approved'] = true;
+
+        return   User::create($fields);
+    }
 
 
     public function destroy(User $user)
@@ -61,6 +75,4 @@ class UserController extends Controller
         $advisors = User::where('role', 'advisor')->get();
         return response()->json($advisors);
     }
-
-
 }

@@ -6,7 +6,7 @@ export const useUserStore = defineStore("userStore", {
     return {
       errors: {},
       user: null,
-      advisors: [], 
+      advisors: [],
     };
   },
   // getters: {},
@@ -94,6 +94,27 @@ export const useUserStore = defineStore("userStore", {
 
     async registerCoordinator(formData) {
       const res = await fetch(`/api/admin/register-coordinator`, {
+        method: "post",
+        headers: {
+          authorization: `Bearer ${localStorage.getItem("token")}`,
+          "Content-Type": "application/json",
+
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await res.json();
+      console.log(data);
+      if (data.errors) {
+        this.errors = data.errors;
+      } else {
+        this.errors = {};
+
+        router.push({ name: "Home" });
+      }
+    },
+    async registerAdvisor(formData) {
+      const res = await fetch(`/api/admin/register-Advisor`, {
         method: "post",
         headers: {
           authorization: `Bearer ${localStorage.getItem("token")}`,
