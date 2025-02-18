@@ -9,6 +9,7 @@ export const useProjectStore = defineStore("projectStore", {
   },
   actions: {
 
+
     /************************ Get Project Request   **************** */
     async getProjectRequests() {
       const res = await fetch('/api/coordinator/project-requests', {
@@ -29,9 +30,10 @@ export const useProjectStore = defineStore("projectStore", {
       }
     },
     /************************ Get All Ongoing Projects   **************** */
+
     async getAllOngoingProjects() {
-      const res = await fetch('/api/admin/ongoing-projects', {
-        method: 'GET',
+      const res = await fetch("/api/admin/ongoing-projects", {
+        method: "GET",
         headers: {
           authorization: `Bearer ${localStorage.getItem("token")}`,
           "Content-Type": "application/json",
@@ -52,13 +54,13 @@ export const useProjectStore = defineStore("projectStore", {
 
     async registerProject(projectData) {
       try {
-        const res = await fetch('/api/projects', {
-          method: 'POST',
+        const res = await fetch("/api/projects", {
+          method: "POST",
           headers: {
             authorization: `Bearer ${localStorage.getItem("token")}`,
-            "Content-Type": "application/json",
+            // Do not set Content-Type header, let the browser set it automatically
           },
-          body: JSON.stringify(projectData),
+          body: projectData, // FormData object
         });
 
         const data = await res.json();
@@ -66,17 +68,17 @@ export const useProjectStore = defineStore("projectStore", {
           this.errors = data.errors;
         } else {
           this.project = data;
-          router.push('/'); // Redirect to the projects page or any other page
+          router.push("/"); // Redirect to the projects page or any other page
         }
       } catch (error) {
-        console.error('Error registering project:', error);
-        this.errors = { fetch: 'Failed to register project' };
+        console.error("Error registering project:", error);
+        this.errors = { fetch: "Failed to register project" };
       }
     },
     /********************* Delete Project  ********************** */
     async deleteProject(projectId) {
       const res = await fetch(`/api/admin/projects/${projectId}`, {
-        method: 'DELETE',
+        method: "DELETE",
         headers: {
           authorization: `Bearer ${localStorage.getItem("token")}`,
           "Content-Type": "application/json",
@@ -92,6 +94,7 @@ export const useProjectStore = defineStore("projectStore", {
         return data;
       }
     },
+ 
 
     /****************  Approve Student Register  ***************/
     async approveProject(projectId) {
@@ -115,4 +118,7 @@ export const useProjectStore = defineStore("projectStore", {
 
   }
 
+ 
+  },
+ 
 });
