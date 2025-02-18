@@ -36,7 +36,7 @@ const handleApprove = async (user) => {
       <h1 class="text-center py-8 font-bold text-4xl text-blue-700">Users
       </h1>
 
-      <div class="pt-2 relative pl-6 py-4 max-w-screen-md  text-gray-600">
+      <!-- <div class="pt-2 relative pl-6 py-4 max-w-screen-md  text-gray-600">
         <input v-model="searchQuery"
           class="border-2 w-full border-gray-300 bg-white h-10 py-2 px-5 pr-16 rounded-lg text-sm focus:outline-none"
           type="search" name="search" placeholder="Search">
@@ -51,7 +51,7 @@ const handleApprove = async (user) => {
 
 
         </button>
-      </div>
+      </div> -->
 
       <table class="min-w-full divide-y divide-gray-200 overflow-x-auto">
         <thead class="bg-gray-50">
@@ -60,7 +60,10 @@ const handleApprove = async (user) => {
               name
             </th>
             <th scope="col" class="px-6 py-3 text-left text-xs font-bold  uppercase tracking-wider">
-              User Phone Number
+              Department
+            </th>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-bold  uppercase tracking-wider">
+              Student Id
             </th>
             <th scope="col" class="px-6 py-3 text-left text-xs font-bold  uppercase tracking-wider">
               email
@@ -83,7 +86,11 @@ const handleApprove = async (user) => {
               </div>
             </td>
             <td class="px-6 py-4 whitespace-nowrap">
-              <div class="text-sm text-gray-900">{{ user.phone_number }} </div>
+              <div class="text-sm text-gray-900">{{ user.department }} </div>
+
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap">
+              <div class="text-sm text-gray-900">{{ user.student_id }} </div>
 
             </td>
             <td class="px-6 py-4 whitespace-nowrap">
