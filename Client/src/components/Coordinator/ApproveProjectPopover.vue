@@ -9,7 +9,7 @@ import { onMounted, reactive, ref } from "vue";
 
 const { getAdvisors } = useUserStore()
 const { errors } = storeToRefs(useUserStore())
-const { approveProject } = useProjectStore()
+const { assignAdvisor } = useProjectStore()
 
 const emit = defineEmits(['handleUpdate'])
 
@@ -25,7 +25,7 @@ onMounted(async () => {
   // console.log(advisors.value);
 })
 const submit = async () => {
-  await approveProject(props.projectId, formData)
+  await assignAdvisor(props.projectId, formData)
   emit('handleUpdate');
 
   // console.log(formData);

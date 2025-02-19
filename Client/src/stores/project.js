@@ -53,27 +53,25 @@ export const useProjectStore = defineStore("projectStore", {
     /********************* Register Project***********/
 
     async registerProject(projectData) {
-      try {
-        const res = await fetch("/api/projects", {
-          method: "POST",
-          headers: {
-            authorization: `Bearer ${localStorage.getItem("token")}`,
-            // Do not set Content-Type header, let the browser set it automatically
-          },
-          body: projectData, // FormData object
-        });
 
-        const data = await res.json();
-        if (data.errors) {
-          this.errors = data.errors;
-        } else {
-          this.project = data;
-          router.push("/"); // Redirect to the projects page or any other page
-        }
-      } catch (error) {
-        console.error("Error registering project:", error);
-        this.errors = { fetch: "Failed to register project" };
+      const res = await fetch("/api/projects", {
+        method: "POST",
+        headers: {
+          authorization: `Bearer ${localStorage.getItem("token")}`,
+
+        },
+        body: projectData, // FormData object
+      });
+
+      const data = await res.json();
+      if (data.errors) {
+        this.errors = data.errors;
+      } else {
+        this.project = data;
+        router.push({ name: "Home" });
       }
+
+
     },
     /********************* Delete Project  ********************** */
     async deleteProject(projectId) {
@@ -97,8 +95,8 @@ export const useProjectStore = defineStore("projectStore", {
 
 
     /****************  Approve Student Register  ***************/
-    async approveProject(projectId, formData) {
-      const res = await fetch(`/api/approve-project/${projectId}`, {
+    async assignAdvisor(projectId, formData) {
+      const res = await fetch(`/api/assign-advisor/${projectId}`, {
         method: 'PUT',
         headers: {
           authorization: `Bearer ${localStorage.getItem("token")}`,

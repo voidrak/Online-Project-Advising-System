@@ -8,24 +8,24 @@ import { useProjectStore } from '@/stores/project';
 import { onMounted, ref } from 'vue';
 
 
-const { getProjectRequests } = useProjectStore()
+const { getUnassignedProject } = useProjectStore()
 const { deleteProject } = useProjectStore()
 
 const projects = ref([]);
 const searchQuery = ref("")
 
 onMounted(async () => {
-  projects.value = await getProjectRequests();
+  projects.value = await getUnassignedProject();
   // console.log(projects.value);
 })
 
 const handleDelete = async (project) => {
   deleteProject(project);
-  projects.value = await getProjectRequests();
+  projects.value = await getUnassignedProject();
 
 }
 const handleUpdate = async () => {
-  projects.value = await getProjectRequests();
+  projects.value = await getUnassignedProject();
 
 }
 

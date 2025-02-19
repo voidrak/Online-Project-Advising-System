@@ -26,6 +26,11 @@ class ProjectController extends Controller
         $projects = Project::where('approved', false)->with('student')->get();
         return response()->json($projects);
     }
+    public function getUnassignedProject()
+    {
+        $projects = Project::where('advisor_id', null)->with('student')->get();
+        return response()->json($projects);
+    }
 
 
     public function getAllOngoingProjects()
@@ -104,7 +109,7 @@ class ProjectController extends Controller
         return response()->json(['message' => 'Project deleted successfully']);
     }
 
-    public function approveProject(Request $request, Project $project)
+    public function assignAdvisor(Request $request, Project $project)
     {
         $validatedData = $request->validate([
             'advisor_id' => 'required|exists:users,id',
@@ -113,9 +118,9 @@ class ProjectController extends Controller
 
         $project->advisor_id = $validatedData['advisor_id'];
         $project->due_date = $validatedData['due_date'];
-        $project->approved = true;
+        // $project->approved = true;
         $project->save();
 
-        return response()->json(['message' => 'Project approved successfully']);
+        return response()->json(['message' => 'Advisor assigned successfully']);
     }
 }
