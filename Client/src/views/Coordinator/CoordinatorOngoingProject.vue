@@ -9,7 +9,7 @@ import { onMounted, ref } from 'vue';
 
 
 const { getAllOngoingProjects } = useProjectStore()
-const { deleteProject } = useProjectStore()
+const { notifyDeadline } = useProjectStore()
 
 const projects = ref([]);
 const searchQuery = ref("")
@@ -19,8 +19,8 @@ onMounted(async () => {
   // console.log(projects.value);
 })
 
-const notifyDeadline = async (project) => {
-  // deleteProject(project);
+const handleNotifyDeadline = async (projectId) => {
+  notifyDeadline(projectId)
   // projects.value = await getAllOngoingProjects();
 
 }
@@ -89,6 +89,9 @@ const isDeadlinePassed = (dueDate) => {
               Student
             </th>
             <th scope="col" class="px-6 py-3 text-left text-xs font-bold  uppercase tracking-wider">
+              Advisor
+            </th>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-bold  uppercase tracking-wider">
               Remaining Days
             </th>
 
@@ -118,6 +121,10 @@ const isDeadlinePassed = (dueDate) => {
               <div class="text-sm text-gray-900">{{ project.student?.name }} </div>
 
             </td>
+            <td class="px-6 py-4 whitespace-nowrap">
+              <div class="text-sm text-gray-900">{{ project.advisor?.name }} </div>
+
+            </td>
             <td class="px-6 py-4 whitespace-nowrap" :class="{ 'text-red-500': isDeadlinePassed(project.due_date) }">
               <div class="text-sm" :class="{ 'text-red-500 font-semibold': isDeadlinePassed(project.due_date) }">
                 {{ getRemainingDaysText(project.due_date) }}
@@ -125,7 +132,7 @@ const isDeadlinePassed = (dueDate) => {
 
             </td>
             <td class="px-6 py-4 whitespace-nowrap  text-sm font-medium flex">
-              <button @click.prevent="notifyDeadline(project.id)"
+              <button @click.prevent="handleNotifyDeadline(project.id)"
                 class="ml-24 mx-auto bg-green-500 text-white hover:bg-green-600    px-2 rounded-md py-[10px] ">Remember
                 and
                 Notify</button>

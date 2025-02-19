@@ -7,6 +7,9 @@ use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\DeadlineNotification; // Create this Mailable
+use Carbon\Carbon; // Import Carbon
 
 class ProjectController extends Controller
 {
@@ -135,5 +138,26 @@ class ProjectController extends Controller
         $project->save();
 
         return response()->json(['message' => 'Advisor assigned successfully']);
+    }
+
+    public function notifyDeadline(Project $project)
+    {
+        // Validate that the project exists and the user has permission
+
+        // Get student and advisor emails
+        $studentEmail = $project->student->email;
+        $advisorEmail = $project->advisor->email;
+
+        // Calculate days left
+        $dueDate = Carbon::parse($project->due_date);
+        $daysLeft = ceil(now()->diffInDays($dueDate, false));
+
+        // Send email to student
+        Mail::to($studentEmail)->send(new DeadlineNotification($project, $daysLeft));
+
+        // Send email to advisor
+        Mail::to($advisorEmail)->send(new DeadlineNotification($project, $daysLeft));
+
+        return response()->json(['message' => 'Deadline notification sent successfully']);
     }
 }
