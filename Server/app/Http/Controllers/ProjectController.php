@@ -6,6 +6,7 @@ use App\Models\Project;
 use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ProjectController extends Controller
 {
@@ -15,6 +16,13 @@ class ProjectController extends Controller
     public function index()
     {
         $projects = Project::all();
+        return response()->json($projects);
+    }
+
+    public function getProjectCoordinator()
+    {
+        $user = Auth::user();
+        $projects = Project::where('department', $user->department)->with('student', 'advisor')->get();
         return response()->json($projects);
     }
 
