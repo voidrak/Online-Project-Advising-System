@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -72,7 +73,11 @@ class UserController extends Controller
 
     public function getAdvisors()
     {
-        $advisors = User::where('role', 'advisor')->get();
+        $user = Auth::user();
+        $advisors = User::where('role', 'advisor')
+            ->where('department', $user->department)
+            ->get(['id', 'name']);
+
         return response()->json($advisors);
     }
 }

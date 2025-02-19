@@ -147,15 +147,11 @@ export const useUserStore = defineStore("userStore", {
           },
         });
         const data = await res.json();
-        console.log(data);
+        // console.log(data);
         if (data.errors) {
           this.errors = data.errors;
         } else {
-          this.advisors = data.map(advisor => ({
-            id: advisor.id,
-            name: advisor.name
-          }));
-          console.log(this.advisors);
+          return data
         }
       } catch (error) {
         console.error('Error fetching advisors:', error);
