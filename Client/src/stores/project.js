@@ -51,7 +51,7 @@ export const useProjectStore = defineStore("projectStore", {
     /************************ Get All Ongoing Projects   **************** */
 
     async getAllOngoingProjects() {
-      const res = await fetch("/api/admin/ongoing-projects", {
+      const res = await fetch("/api/coordinator/ongoing-projects", {
         method: "GET",
         headers: {
           authorization: `Bearer ${localStorage.getItem("token")}`,

@@ -26,8 +26,8 @@ Route::middleware('auth:sanctum')->group(function () {
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/coordinator/projects', [ProjectController::class, 'getProjectCoordinator']);
-    Route::get('/coordinator/project-requests', [ProjectController::class, 'getProjectRequests']);
-    Route::get('/admin/ongoing-projects', [ProjectController::class, 'getAllOngoingProjects']);
+    Route::get('/coordinator/project-requests', [ProjectController::class, 'getUnassignedProject']);
+    Route::get('/coordinator/ongoing-projects', [ProjectController::class, 'getAllOngoingProjects']);
     Route::put('/assign-advisor/{project}', [ProjectController::class, 'assignAdvisor']);
     Route::post('/projects', [ProjectController::class, 'store']);
     Route::put('/projects/{project}', [ProjectController::class, 'update']);

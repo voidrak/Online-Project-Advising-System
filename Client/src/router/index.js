@@ -12,6 +12,7 @@ import AddAdvisor from '@/views/Admin/AddAdvisor.vue';
 import AdminOngoingProjects from '@/views/Coordinator/CoordinatorAllProject.vue';
 import CoordinatorHome from '@/views/Coordinator/CoordinatorHome.vue';
 import CoordinatorAllProject from '@/views/Coordinator/CoordinatorAllProject.vue';
+import CoordinatorOngoingProject from '@/views/Coordinator/CoordinatorOngoingProject.vue';
 
 
 const router = createRouter({
@@ -85,6 +86,12 @@ const router = createRouter({
       path: '/coordinator/projects',
       name: 'CoordinatorAllProject',
       component: CoordinatorAllProject,
+      meta: { coordinator: true },
+    },
+    {
+      path: '/coordinator/ongoing-projects',
+      name: 'CoordinatorOngoingProject',
+      component: CoordinatorOngoingProject,
       meta: { coordinator: true },
     },
 
