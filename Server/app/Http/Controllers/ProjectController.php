@@ -34,6 +34,7 @@ class ProjectController extends Controller
         $projects = Project::where('approved', false)->with('student')->get();
         return response()->json($projects);
     }
+
     public function getUnassignedProject()
     {
         $projects = Project::where('advisor_id', null)->with('student')->get();
@@ -43,7 +44,11 @@ class ProjectController extends Controller
 
     public function getAllOngoingProjects()
     {
-        $projects = Project::where('completed', false)->with('student', 'advisor')->get();
+        $projects = Project::where('completed', false)
+            ->whereNotNull('advisor_id')
+            ->with('student', 'advisor')
+            ->orderBy('due_date', 'asc')
+            ->get();
         return response()->json($projects);
     }
 
