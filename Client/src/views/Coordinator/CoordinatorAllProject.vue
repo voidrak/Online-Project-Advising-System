@@ -1,35 +1,35 @@
 <script setup>
-import AdminLayout from '@/layout/AdminLayout.vue';
+import CoordinatorLayout from '@/layout/CoordinatorLayout.vue';
 import { useProjectStore } from '@/stores/project';
 
 
 import { computed, onMounted, reactive, ref } from 'vue';
 
-const { getAllOngoingProjects } = useProjectStore()
+const { getProjectAll } = useProjectStore()
 const { deleteProject } = useProjectStore()
 
-const onGoingProject = ref([]);
+const projects = ref([]);
 const searchQuery = ref("")
 
 onMounted(async () => {
-  onGoingProject.value = await getAllOngoingProjects();
-  console.log(onGoingProject.value);
+  projects.value = await getProjectAll();
+  console.log(projects.value);
 })
 
 const handleDelete = async (project) => {
   deleteProject(project);
-  onGoingProject.value = await getAllOngoingProjects();
+  projects.value = await getProjectAll();
 
 }
 
-const filteredOngoingProject = computed(() => {
+const filteredProject = computed(() => {
   if (!searchQuery.value) {
-    return onGoingProject.value;
+    return projects.value;
   }
   const searchTerm = searchQuery.value.toLowerCase();
-  return onGoingProject.value.filter(project =>
-    project.name.toLowerCase().includes(searchTerm) ||
-    project.role.toLowerCase().includes(searchTerm) ||
+  return projects.value.filter(project =>
+    project.project_title.toLowerCase().includes(searchTerm) ||
+    project.student.name.toLowerCase().includes(searchTerm) ||
     project.department.toLowerCase().includes(searchTerm)
   );
 });
@@ -37,9 +37,10 @@ const filteredOngoingProject = computed(() => {
 </script>
 
 <template>
-  <AdminLayout>
-    <div v-if="onGoingProject" class="">
-      <h1 class="text-center py-8 font-bold text-4xl text-blue-700">Ongoing Projects
+  <CoordinatorLayout>
+
+    <div v-if="projects" class="">
+      <h1 class="text-center py-8 font-bold text-4xl text-blue-700">All Projects
       </h1>
 
       <div class="pt-2 relative pl-6 py-4 max-w-screen-md  text-gray-600">
@@ -63,16 +64,21 @@ const filteredOngoingProject = computed(() => {
         <thead class="bg-gray-50">
           <tr class="">
             <th scope="col" class="px-6 py-3 text-left text-xs font-bold  uppercase tracking-wider">
-              name
+              Project Title
+            </th>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-bold  uppercase tracking-wider">
+              Student
             </th>
             <th scope="col" class="px-6 py-3 text-left text-xs font-bold  uppercase tracking-wider">
               Department
             </th>
+
+
             <th scope="col" class="px-6 py-3 text-left text-xs font-bold  uppercase tracking-wider">
-              email
+              Assigned
             </th>
             <th scope="col" class="px-6 py-3 text-left text-xs font-bold  uppercase tracking-wider">
-              Type
+              Approved
             </th>
             <th scope="col" class="px-6 py-3 text-left text-xs font-bold  uppercase tracking-wider">
               Action
@@ -80,7 +86,7 @@ const filteredOngoingProject = computed(() => {
           </tr>
         </thead>
         <tbody class="bg-white divide-y divide-gray-200">
-          <tr v-for="(project, index) in filteredOngoingProject" :key="index">
+          <tr v-for="(project, index) in filteredProject" :key="index">
             <td class="px-6 py-4 whitespace-nowrap">
               <div class="flex items-center">
 
@@ -92,15 +98,22 @@ const filteredOngoingProject = computed(() => {
               </div>
             </td>
             <td class="px-6 py-4 whitespace-nowrap">
+              <div class="text-sm text-gray-900">{{ project.student?.name }} </div>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap">
               <div class="text-sm text-gray-900">{{ project.department }} </div>
 
             </td>
             <td class="px-6 py-4 whitespace-nowrap">
-              {{ project.email }}
+              <span class="" v-if="project.advisor_id">{{ project.advisor.name }}</span>
+              <span class="text-red-500" v-else>No Assigned</span>
             </td>
             <td class="px-6 py-4 whitespace-nowrap">
-              {{ project.role }}
+              <span class="text-green-500" v-if="project.approved">Approved</span>
+              <span class="text-red-500" v-else>Not Approved</span>
+
             </td>
+
             <td class="px-6 py-4 whitespace-nowrap  text-sm font-medium flex">
               <button @click.prevent="handleDelete(project.id)"
                 class="ml-2 bg-red-500 text-white hover:bg-red-600  px-1 rounded-md py-[5px] ">Delete</button>
@@ -113,5 +126,5 @@ const filteredOngoingProject = computed(() => {
         </tbody>
       </table>
     </div>
-  </AdminLayout>
+  </CoordinatorLayout>
 </template>

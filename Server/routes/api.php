@@ -21,17 +21,17 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/admin/register-coordinator', [UserController::class, 'registerCoordinator'])->middleware(AdminMiddleware::class);
     Route::post('/admin/register-Advisor', [UserController::class, 'registerAdvisor'])->middleware(AdminMiddleware::class);
     Route::delete('/admin/users/{user}', [UserController::class, 'destroy']);
+    Route::get('/advisors', [UserController::class, 'getAdvisors']);
 });
 
 Route::middleware('auth:sanctum')->group(function () {
-    Route::get('/advisors', [UserController::class, 'getAdvisors']);
-    Route::get('/projects', [ProjectController::class, 'index']);
+    Route::get('/coordinator/projects', [ProjectController::class, 'getProjectCoordinator']);
     Route::get('/coordinator/project-requests', [ProjectController::class, 'getProjectRequests']);
     Route::get('/admin/ongoing-projects', [ProjectController::class, 'getAllOngoingProjects']);
     Route::put('/assign-advisor/{project}', [ProjectController::class, 'assignAdvisor']);
     Route::post('/projects', [ProjectController::class, 'store']);
     Route::put('/projects/{project}', [ProjectController::class, 'update']);
-    Route::delete('admin/projects/{project}', [ProjectController::class, 'destroy'])->middleware(AdminMiddleware::class);
+    Route::delete('admin/projects/{project}', [ProjectController::class, 'destroy']);
 });
 
 

@@ -9,8 +9,9 @@ import Create from '@/views/Project/Create.vue';
 import UnApprovedStudentHome from '@/views/User/UnApprovedStudentHome.vue';
 import AddCoordinator from '@/views/Admin/AddCoordinator.vue';
 import AddAdvisor from '@/views/Admin/AddAdvisor.vue';
-import AdminOngoingProjects from '@/views/Admin/AdminOngoingProjects.vue';
+import AdminOngoingProjects from '@/views/Coordinator/CoordinatorAllProject.vue';
 import CoordinatorHome from '@/views/Coordinator/CoordinatorHome.vue';
+import CoordinatorAllProject from '@/views/Coordinator/CoordinatorAllProject.vue';
 
 
 const router = createRouter({
@@ -66,12 +67,7 @@ const router = createRouter({
       component: AddAdvisor,
       meta: { admin: true },
     },
-    {
-      path: '/admin/ongoing-projects',
-      name: 'AdminOngoingProjects',
-      component: AdminOngoingProjects,
-      meta: { admin: true },
-    },
+
 
     {
       path: '/unApprovedStudent',
@@ -83,6 +79,12 @@ const router = createRouter({
       path: '/coordinator',
       name: 'CoordinatorHome',
       component: CoordinatorHome,
+      meta: { coordinator: true },
+    },
+    {
+      path: '/coordinator/projects',
+      name: 'CoordinatorAllProject',
+      component: CoordinatorAllProject,
       meta: { coordinator: true },
     },
 

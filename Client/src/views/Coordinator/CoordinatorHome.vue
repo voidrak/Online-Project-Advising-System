@@ -37,8 +37,8 @@ const handleUpdate = async () => {
 <template>
   <CoordinatorLayout>
 
-    <div v-if="projects" class="">
-      <h1 class="text-center py-8 font-bold text-4xl text-blue-700">Project Requests
+    <div class="">
+      <h1 class="text-center py-8 font-bold text-4xl text-blue-700">Assign Advisor
       </h1>
 
       <!-- <div class="pt-2 relative pl-6 py-4 max-w-screen-md  text-gray-600">
@@ -58,7 +58,7 @@ const handleUpdate = async () => {
         </button>
       </div> -->
 
-      <table class="min-w-full divide-y divide-gray-200 overflow-x-auto">
+      <table v-if="projects.length > 0" class="min-w-full divide-y divide-gray-200 overflow-x-auto">
         <thead class="bg-gray-50">
           <tr class="">
             <th scope="col" class="px-6 py-3 text-left text-xs font-bold  uppercase tracking-wider">
@@ -104,7 +104,7 @@ const handleUpdate = async () => {
             </td>
             <td class="px-6 py-4 whitespace-nowrap  text-sm font-medium flex">
               <button @click.prevent="handleDelete(project.id)"
-                class="ml-2 bg-red-500 text-white hover:bg-red-600 w-24  px-2 rounded-md py-[10px] ">Delete</button>
+                class="ml-2 bg-red-500 text-white hover:bg-red-600 w-24  px-2 rounded-md py-[10px] ">Reject</button>
 
               <ApproveProjectPopover @handleUpdate="handleUpdate" :projectId="project.id" />
 
@@ -119,6 +119,12 @@ const handleUpdate = async () => {
 
         </tbody>
       </table>
+
+
+      <div v-else class="mt-52">
+        <p class="text-green-500 font-bold text-center">No New Project Found To Be Assigned </p>
+      </div>
     </div>
+
   </CoordinatorLayout>
 </template>
