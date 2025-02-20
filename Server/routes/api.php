@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\AdminMiddleware;
 use Illuminate\Http\Request;
@@ -10,9 +11,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
-
-
-
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/admin/users', [UserController::class, 'getAllUsers'])->middleware(AdminMiddleware::class);
@@ -31,17 +29,21 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('/assign-advisor/{project}', [ProjectController::class, 'assignAdvisor']);
     Route::post('/projects', [ProjectController::class, 'store']);
     Route::put('/projects/{project}', [ProjectController::class, 'update']);
+
+    Route::get('/projects/advisor/{advisor_id}', [ProjectController::class, 'getProjectsByAdvisor']);
+    Route::get('/projects/advisor/{advisor_id}/approved', [ProjectController::class, 'getApprovedProjectsbyAdvisor']);
+    Route::put('/projects/{project}/approval-status', [ProjectController::class, 'updateApprovalStatus']);
     Route::delete('admin/projects/{project}', [ProjectController::class, 'destroy']);
     Route::post('/projects/{project}/notify-deadline', [ProjectController::class, 'notifyDeadline']);
+
 });
 
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/projects/{project}/comments', [CommentController::class, 'getCommentsByProject']);
+    Route::post('/projects/{project}/comments', [CommentController::class, 'addComment']);
+    
 
-
-
-
-
-
-
+});
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
