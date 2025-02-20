@@ -1,1 +1,2 @@
-databaseSchema.md
+*.sqlite*
+database.sqlite

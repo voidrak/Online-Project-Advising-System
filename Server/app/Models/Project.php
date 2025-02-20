@@ -19,8 +19,13 @@ class Project extends Model
         'document',
         'due_date',
         'approved',
+        'completed'
     ];
 
+    public function getDocumentUrlAttribute()
+    {
+        return $this->document ? asset('storage/' . $this->document) : null;
+    }
 
     public function student()
     {
