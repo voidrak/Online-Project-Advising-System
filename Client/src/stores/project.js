@@ -187,21 +187,21 @@ export const useProjectStore = defineStore("projectStore", {
     async getCommentsByProject(projectId) {
       const res = await fetch(`/api/projects/${projectId}/comments`, {
         method: "GET",
-         headers: {
-                  authorization: `Bearer ${localStorage.getItem("token")}`,
-                  "Content-Type": "application/json",
-                },
-              });
+        headers: {
+          authorization: `Bearer ${localStorage.getItem("token")}`,
+          "Content-Type": "application/json",
+        },
+      });
 
-              const data = res.status !== 204 ? await res.json() : {};
-              console.log(data);
+      const data = res.status !== 204 ? await res.json() : {};
+      console.log(data);
 
-              if (data.errors) {
-                this.errors = data.errors;
-              } else {
-                return data;
-              }
-            },
+      if (data.errors) {
+        this.errors = data.errors;
+      } else {
+        return data;
+      }
+    },
 
 
 

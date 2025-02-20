@@ -9,7 +9,6 @@ import Create from "@/views/Project/Create.vue";
 import UnApprovedStudentHome from "@/views/User/UnApprovedStudentHome.vue";
 import AddCoordinator from "@/views/Admin/AddCoordinator.vue";
 import AddAdvisor from "@/views/Admin/AddAdvisor.vue";
-import AdminOngoingProjects from "@/views/Admin/AdminOngoingProjects.vue";
 import CoordinatorHome from "@/views/Coordinator/CoordinatorHome.vue";
 import CoordinatorAllProject from "@/views/Coordinator/CoordinatorAllProject.vue";
 import CoordinatorOngoingProject from "@/views/Coordinator/CoordinatorOngoingProject.vue";
