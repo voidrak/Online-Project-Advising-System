@@ -22,6 +22,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/advisors', [UserController::class, 'getAdvisors']);
 });
 
+Route::get('/projects', [ProjectController::class, 'index']);
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/coordinator/projects', [ProjectController::class, 'getProjectCoordinator']);
     Route::get('/coordinator/project-requests', [ProjectController::class, 'getUnassignedProject']);
@@ -35,14 +36,11 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('/projects/{project}/approval-status', [ProjectController::class, 'updateApprovalStatus']);
     Route::delete('admin/projects/{project}', [ProjectController::class, 'destroy']);
     Route::post('/projects/{project}/notify-deadline', [ProjectController::class, 'notifyDeadline']);
-
 });
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/projects/{project}/comments', [CommentController::class, 'getCommentsByProject']);
     Route::post('/projects/{project}/comments', [CommentController::class, 'addComment']);
-    
-
 });
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
