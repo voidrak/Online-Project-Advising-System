@@ -1,26 +1,26 @@
 <script setup>
-import AdminLayout from "@/layout/AdminLayout.vue";
-import AdvisorLayout from "@/layout/AdvisorLayout.vue";
-import { useProjectStore } from "@/stores/project";
 import { onMounted, ref } from "vue";
+import { useProjectStore } from "@/stores/project";
 import { useAuthStore } from "@/stores/auth";
+import UserLayout from "@/layout/UserLayout.vue";
 
-const projects = ref([]);
-const { getApprovedProjectsByAdvisor } = useProjectStore();
+const projectStore = useProjectStore();
 const authStore = useAuthStore();
+const projects = ref([]);
 
 onMounted(async () => {
   await authStore.getUser();
-  projects.value = await getApprovedProjectsByAdvisor(authStore.user.id);
-  console.log(projects.value);
+  projects.value = await projectStore.getApprovedProjectsByStudent(
+    authStore.user.id
+  );
 });
 </script>
 
 <template>
-  <AdvisorLayout>
+  <UserLayout>
     <div class="flex flex-col items-center justify-center">
       <h1 class="text-center py-8 font-bold text-4xl text-blue-700 capitalize">
-        Project List that are Approced By you
+        Manage your Projects
       </h1>
     </div>
     <table class="min-w-full divide-y divide-gray-200 overflow-x-auto">
@@ -32,24 +32,14 @@ onMounted(async () => {
           >
             Project Title
           </th>
-          <th
-            scope="col"
-            class="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider"
-          >
-            Department
-          </th>
+
           <th
             scope="col"
             class="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider"
           >
             Description
           </th>
-          <th
-            scope="col"
-            class="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider"
-          >
-            Student
-          </th>
+
           <th
             scope="col"
             class="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider"
@@ -69,18 +59,17 @@ onMounted(async () => {
               </div>
             </div>
           </td>
-          <td class="px-6 py-4 whitespace-nowrap">
-            <div class="text-sm text-gray-900">{{ project.department }}</div>
-          </td>
+
           <td class="px-6 py-4 whitespace-nowrap">
             <div class="text-sm text-gray-900">{{ project.description }}</div>
           </td>
-          <td class="px-6 py-4 whitespace-nowrap">
-            <div class="text-sm text-gray-900">{{ project.student?.name }}</div>
-          </td>
+
           <td class="px-6 py-4 whitespace-nowrap text-sm font-medium flex">
             <RouterLink
-              :to="{ name: 'CommentPage', params: { projectId: project.id } }"
+              :to="{
+                name: 'CommentPageStudent',
+                params: { projectId: project.id },
+              }"
               class="ml-2 text-white p-2 transition ease-in-out duration-150 rounded-md py-[10px]"
             >
               <svg
@@ -97,5 +86,5 @@ onMounted(async () => {
         </tr>
       </tbody>
     </table>
-  </AdvisorLayout>
+  </UserLayout>
 </template>
