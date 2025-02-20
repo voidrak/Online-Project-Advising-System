@@ -16,13 +16,13 @@ const authStore = useAuthStore()
         class="font-medium text-green-500 text-lg hover:text-green-300 transition ease-in-out duration-300 mb-5 lg:mb-0">
         Home
       </RouterLink>
+      <RouterLink :to="{ name: 'UserProject' }"
+        class="font-medium text-green-500 text-lg hover:text-green-300 transition ease-in-out duration-300 mb-5 lg:mb-0">
+        Projects
+      </RouterLink>
       <li
         class="font-medium text-green-500 text-lg hover:text-green-300 transition ease-in-out duration-300 mb-5 lg:mb-0">
-        <a href="#">Services</a>
-      </li>
-      <li
-        class="font-medium text-green-500 text-lg hover:text-green-300 transition ease-in-out duration-300 mb-5 lg:mb-0">
-        <a href="#">Works</a>
+        <a href="#">About</a>
       </li>
       <li
         class="font-medium text-green-500 text-lg hover:text-green-300 transition ease-in-out duration-300 mb-5 lg:mb-0">
