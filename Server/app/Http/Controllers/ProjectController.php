@@ -34,6 +34,7 @@ class ProjectController extends Controller
         return response()->json($projects);
     }
 
+
     /**
      * Store a newly created resource in storage.
      */
@@ -106,11 +107,30 @@ class ProjectController extends Controller
         return response()->json(['message' => 'Project deleted successfully']);
     }
 
-    public function approveProject(Project $project)
+    public function updateApprovalStatus(Request $request, Project $project)
     {
-        $project->approved = true;
+        // dd($request->all());
+        $validatedData = $request->validate([
+            'approved' => 'required|boolean',
+        ]);
+
+        $project->approved = $validatedData['approved'];
         $project->save();
 
-        return response()->json(['message' => 'Project approved successfully']);
+        $message = $project->approved ? 'Project approved successfully' : 'Project declined successfully';
+        return response()->json(['message' => $message]);
+    }
+
+    /**
+     * Get projects assigned to a specific advisor.
+     */
+    public function getProjectsByAdvisor($advisor_id)
+    {
+        $projects = Project::where('advisor_id', $advisor_id)->where('approved', false)->with('student')->get();
+        return response()->json($projects);
+    }
+    function getApprovedProjectsbyAdvisor($advisor_id){
+        $projects = Project::where('approved', true)->where('advisor_id', $advisor_id)->with('student')->get();
+        return response()->json($projects);
     }
 }
