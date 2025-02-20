@@ -57,7 +57,7 @@ const isDeadlinePassed = (dueDate) => {
   <CoordinatorLayout>
 
     <div class="">
-      <h1 class="text-center py-8 font-bold text-4xl text-blue-700"> Ongoing Projects </h1>
+      <h1 class="text-center py-8 font-bold text-4xl text-green-700"> Ongoing Projects </h1>
 
       <!-- <div class="pt-2 relative pl-6 py-4 max-w-screen-md  text-gray-600">
         <input v-model="searchQuery"

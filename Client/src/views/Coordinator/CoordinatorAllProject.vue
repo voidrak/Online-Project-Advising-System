@@ -40,7 +40,7 @@ const filteredProject = computed(() => {
   <CoordinatorLayout>
 
     <div v-if="projects" class="">
-      <h1 class="text-center py-8 font-bold text-4xl text-blue-700">All Projects
+      <h1 class="text-center py-8 font-bold text-4xl text-green-700">All Projects
       </h1>
 
       <div class="pt-2 relative pl-6 py-4 max-w-screen-md  text-gray-600">

@@ -16,6 +16,7 @@ import AdvisorHome from "@/views/Advisor/AdvisorHome.vue";
 import ApprovedProjects from "@/views/Advisor/ApprovedProjects.vue";
 import CommentPage from "@/views/Advisor/CommentPage.vue";
 import UserProjectPage from "@/views/User/UserProjectPage.vue";
+import UserProjectDetailPage from "@/views/User/UserProjectDetailPage.vue";
 
 
 const router = createRouter({
@@ -49,6 +50,12 @@ const router = createRouter({
       path: "/projects",
       name: "UserProject",
       component: UserProjectPage,
+      meta: { guest: true },
+    },
+    {
+      path: "/projects/:id",
+      name: "UserProjectDetail",
+      component: UserProjectDetailPage,
       meta: { guest: true },
     },
     {

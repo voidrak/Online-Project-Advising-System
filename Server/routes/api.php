@@ -23,6 +23,9 @@ Route::middleware('auth:sanctum')->group(function () {
 });
 
 Route::get('/projects', [ProjectController::class, 'index']);
+Route::get('/projects/{project}', [ProjectController::class, 'show']);
+
+
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/coordinator/projects', [ProjectController::class, 'getProjectCoordinator']);
     Route::get('/coordinator/project-requests', [ProjectController::class, 'getUnassignedProject']);
@@ -30,7 +33,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('/assign-advisor/{project}', [ProjectController::class, 'assignAdvisor']);
     Route::post('/projects', [ProjectController::class, 'store']);
     Route::put('/projects/{project}', [ProjectController::class, 'update']);
-
     Route::get('/projects/advisor/{advisor_id}', [ProjectController::class, 'getProjectsByAdvisor']);
     Route::get('/projects/advisor/{advisor_id}/approved', [ProjectController::class, 'getApprovedProjectsbyAdvisor']);
     Route::put('/projects/{project}/approval-status', [ProjectController::class, 'updateApprovalStatus']);

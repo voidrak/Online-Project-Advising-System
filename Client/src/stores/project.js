@@ -11,6 +11,25 @@ export const useProjectStore = defineStore("projectStore", {
 
 
     /************************ Get All Project    **************** */
+    async getProject(projectId) {
+      const res = await fetch(`/api/projects/${projectId}`, {
+        method: 'GET',
+        headers: {
+          authorization: `Bearer ${localStorage.getItem("token")}`,
+          "Content-Type": "application/json",
+        },
+      });
+
+      const data = res.status !== 204 ? await res.json() : {};
+      console.log(data);
+
+      if (data.errors) {
+        this.errors = data.errors;
+      } else {
+        return data;
+      }
+    },
+    /************************ Get All Project    **************** */
     async getProjectAll() {
       const res = await fetch('/api/coordinator/projects', {
         method: 'GET',
