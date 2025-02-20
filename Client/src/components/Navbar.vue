@@ -28,7 +28,8 @@ const authStore = useAuthStore()
         class="font-medium text-green-500 text-lg hover:text-green-300 transition ease-in-out duration-300 mb-5 lg:mb-0">
         <a href="#">Blog</a>
       </li>
-      <div @click="authStore.logout" class="cursor-pointer " v-if="authStore.user">
+      <div @click="authStore.logout" class="cursor-pointer items-center  flex gap-x-6" v-if="authStore.user">
+        <p class="font-semibold">{{ authStore.user.name }}</p>
         <li
           class="px-8 py-3 bg-red-500 font-medium text-white text-md md:text-lg rounded-md hover:bg-red-700 transition ease-in-out duration-300 mr-14">
           Log Out
