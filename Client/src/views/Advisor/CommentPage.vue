@@ -30,37 +30,25 @@ const handleAddComment = async () => {
 <template>
   <AdvisorLayout>
     <div class="flex flex-col items-center justify-center">
-      <h1 class="text-center py-8 font-bold text-4xl text-blue-700 capitalize">
+      <h1 class="text-center py-8 font-bold text-4xl text-green-700 capitalize">
         Discussion Hub
       </h1>
     </div>
     <div class="w-full max-w-4xl mx-auto p-4">
       <div class="bg-white shadow-md rounded-lg p-4">
         <div class="flex flex-col space-y-4">
-          <div
-            v-for="comment in comments"
-            :key="comment.id"
-            :class="{
-              'self-end bg-blue-100': comment.user_id === authStore.user.id,
-              'self-start bg-gray-100': comment.user_id !== authStore.user.id,
-            }"
-            class="p-2 rounded-lg max-w-xs"
-          >
+          <div v-for="comment in comments" :key="comment.id" :class="{
+            'self-end bg-blue-100': comment.user_id === authStore.user.id,
+            'self-start bg-gray-100': comment.user_id !== authStore.user.id,
+          }" class="p-2 rounded-lg max-w-xs">
             <p class="text-sm">{{ comment.content }}</p>
             <p class="text-xs text-gray-500">{{ comment.user.role }}</p>
           </div>
         </div>
         <div class="mt-4 flex">
-          <input
-            v-model="newComment"
-            type="text"
-            placeholder="Type your comment..."
-            class="flex-1 p-2 border rounded-l-lg"
-          />
-          <button
-            @click="handleAddComment"
-            class="bg-blue-500 text-white p-2 rounded-r-lg"
-          >
+          <input v-model="newComment" type="text" placeholder="Type your comment..."
+            class="flex-1 p-2 border rounded-l-lg" />
+          <button @click="handleAddComment" class="bg-blue-500 text-white p-2 rounded-r-lg">
             Send
           </button>
         </div>

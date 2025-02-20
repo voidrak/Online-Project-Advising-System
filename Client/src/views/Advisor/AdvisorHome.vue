@@ -28,41 +28,26 @@ const handleApprove = async (id) => {
 <template>
   <AdvisorLayout>
     <div class="flex flex-col items-center justify-center">
-      <h1 class="text-center py-8 font-bold text-4xl text-blue-700 capitalize">
+      <h1 class="text-center py-8 font-bold text-4xl text-green-700 capitalize">
         Project List that are Assigned To you
       </h1>
     </div>
     <table class="min-w-full divide-y divide-gray-200 overflow-x-auto">
       <thead class="bg-gray-50">
         <tr class="">
-          <th
-            scope="col"
-            class="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider"
-          >
+          <th scope="col" class="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider">
             Project Title
           </th>
-          <th
-            scope="col"
-            class="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider"
-          >
+          <th scope="col" class="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider">
             Department
           </th>
-          <th
-            scope="col"
-            class="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider"
-          >
+          <th scope="col" class="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider">
             Description
           </th>
-          <th
-            scope="col"
-            class="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider"
-          >
+          <th scope="col" class="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider">
             Student
           </th>
-          <th
-            scope="col"
-            class="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider"
-          >
+          <th scope="col" class="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider">
             Actions
           </th>
         </tr>
@@ -88,16 +73,12 @@ const handleApprove = async (id) => {
             <div class="text-sm text-gray-900">{{ project.student?.name }}</div>
           </td>
           <td class="px-6 py-4 whitespace-nowrap text-sm font-medium flex">
-            <button
-              @click.prevent="handleDecline(project.id)"
-              class="ml-2 bg-red-500 text-white hover:bg-red-600 w-24 px-2 rounded-md py-[10px]"
-            >
+            <button @click.prevent="handleDecline(project.id)"
+              class="ml-2 bg-red-500 text-white hover:bg-red-600 w-24 px-2 rounded-md py-[10px]">
               Decline
             </button>
-            <button
-              @click.prevent="handleApprove(project.id)"
-              class="ml-2 bg-green-500 text-white hover:bg-green-600 px-2 rounded-md py-[10px]"
-            >
+            <button @click.prevent="handleApprove(project.id)"
+              class="ml-2 bg-green-500 text-white hover:bg-green-600 px-2 rounded-md py-[10px]">
               Approve
             </button>
             <!-- <button class="ml-2 bg-green-500 text-white hover:bg-green-600  px-1 rounded-md py-[5px] ">Update</button> -->

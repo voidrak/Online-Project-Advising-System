@@ -37,7 +37,7 @@ const getYear = (dateString) => {
   <UserLayout>
 
     <div v-if="projects" class="">
-      <h1 class="uppercase ml-8 py-8  font-bold text-4xl text-blue-700">Projects
+      <h1 class="uppercase ml-8 py-8  font-bold text-4xl text-green-700">Projects
       </h1>
 
       <div class="pt-2 relative pl-6 py-4 max-w-screen-md  text-gray-600">
@@ -80,12 +80,15 @@ const getYear = (dateString) => {
             <th scope="col" class="px-6 py-3 text-left text-xs font-bold  uppercase tracking-wider">
               Year
             </th>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-bold  uppercase tracking-wider ">
+              See More
+            </th>
 
           </tr>
         </thead>
         <tbody class="bg-white divide-y divide-gray-200">
-          <tr v-for="(project, index) in filteredProject" :key="index"
-            class="hover:bg-green-500 uppercase hover:cursor-pointer  ">
+
+          <tr v-for="(project, index) in filteredProject" :key="index" class=" uppercase   ">
             <td class="px-6 py-4 whitespace-nowrap">
               <div class="text-sm text-gray-900">{{ index + 1 }} </div>
             </td>
@@ -113,8 +116,15 @@ const getYear = (dateString) => {
             <td class="px-6 py-4 whitespace-nowrap">
               <span>{{ getYear(project.updated_at) }}</span>
             </td>
+            <RouterLink :to="{ name: 'UserProjectDetail', params: { id: project.id } }">
+              <td
+                class="px-6 py-4 whitespace-nowrap hover:text-white font-bold hover:cursor-pointer hover:bg-green-500">
+                <span> See More</span>
+              </td>
+            </RouterLink>
 
           </tr>
+
         </tbody>
       </table>
     </div>
