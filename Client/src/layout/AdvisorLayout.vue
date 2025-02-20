@@ -64,7 +64,7 @@ const authStore = useAuthStore();
                 <span class="text-xl font-semibold">Approved Projects</span>
               </div>
             </RouterLink>
-            <RouterLink
+            <!-- <RouterLink
               :to="{ name: 'AddCoordinator' }"
               class="sidebar-item my-2"
             >
@@ -82,8 +82,8 @@ const authStore = useAuthStore();
                 </svg>
                 <span class="text-xl font-semibold"> Advisor </span>
               </div>
-            </RouterLink>
-            <RouterLink :to="{ name: 'AddAdvisor' }" class="sidebar-item my-2">
+            </RouterLink> -->
+            <!-- <RouterLink :to="{ name: 'AddAdvisor' }" class="sidebar-item my-2">
               <div
                 class="sidebar-link gap-3 py-5 my-1 cursor-pointer flex items-center relative rounded-md w-full"
               >
@@ -98,7 +98,7 @@ const authStore = useAuthStore();
                 </svg>
                 <span class="text-xl font-semibold"> Advisor</span>
               </div>
-            </RouterLink>
+            </RouterLink> -->
             <!-- <RouterLink :to="{ name: 'AdminOngoingProjects' }" class="sidebar-item my-2">
               <div class="sidebar-link gap-3 py-5 my-1  cursor-pointer flex items-center relative  rounded-md   w-full">
                 <svg class="size-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">

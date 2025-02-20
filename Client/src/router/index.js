@@ -15,6 +15,10 @@ import CoordinatorOngoingProject from "@/views/Coordinator/CoordinatorOngoingPro
 import AdvisorHome from "@/views/Advisor/AdvisorHome.vue";
 import ApprovedProjects from "@/views/Advisor/ApprovedProjects.vue";
 import CommentPage from "@/views/Advisor/CommentPage.vue";
+
+import StudentProjects from "@/views/Student/StudentProjects.vue"; // Import the new component
+import StudentCommentPage from "@/views/Student/StudentCommentPage.vue";
+
 import UserProjectPage from "@/views/User/UserProjectPage.vue";
 import UserProjectDetailPage from "@/views/User/UserProjectDetailPage.vue";
 
@@ -95,7 +99,6 @@ const router = createRouter({
       meta: { coordinator: true },
     },
     {
-
       path: "/advisor",
       name: "AdvisorHome",
       component: AdvisorHome,
@@ -114,18 +117,29 @@ const router = createRouter({
       props: true,
     },
     {
-      path: '/coordinator/projects',
-      name: 'CoordinatorAllProject',
+      path: "/coordinator/projects",
+      name: "CoordinatorAllProject",
       component: CoordinatorAllProject,
       meta: { coordinator: true },
     },
     {
-      path: '/coordinator/ongoing-projects',
-      name: 'CoordinatorOngoingProject',
+      path: "/coordinator/ongoing-projects",
+      name: "CoordinatorOngoingProject",
       component: CoordinatorOngoingProject,
       meta: { coordinator: true },
     },
-
+    {
+      path: "/studentProjects",
+      name: "studentProjects",
+      component: StudentProjects,
+      meta: { auth: true },
+    },
+    {
+      path: "/projects/:projectId/commentStudent",
+      name: "CommentPageStudent",
+      component: StudentCommentPage,
+      props: true,
+    },
   ],
 });
 

@@ -8,8 +8,6 @@ export const useProjectStore = defineStore("projectStore", {
     };
   },
   actions: {
-
-
     /************************ Get All Project    **************** */
     async getProject(projectId) {
       const res = await fetch(`/api/projects/${projectId}`, {
@@ -31,8 +29,8 @@ export const useProjectStore = defineStore("projectStore", {
     },
     /************************ Get All Project    **************** */
     async getProjectAll() {
-      const res = await fetch('/api/coordinator/projects', {
-        method: 'GET',
+      const res = await fetch("/api/coordinator/projects", {
+        method: "GET",
         headers: {
           authorization: `Bearer ${localStorage.getItem("token")}`,
           "Content-Type": "application/json",
@@ -70,8 +68,8 @@ export const useProjectStore = defineStore("projectStore", {
     },
     /************************ Get Project Request   **************** */
     async getUnassignedProject() {
-      const res = await fetch('/api/coordinator/project-requests', {
-        method: 'GET',
+      const res = await fetch("/api/coordinator/project-requests", {
+        method: "GET",
 
         headers: {
           authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -112,12 +110,10 @@ export const useProjectStore = defineStore("projectStore", {
     /********************* Register Project***********/
 
     async registerProject(projectData) {
-
       const res = await fetch("/api/projects", {
         method: "POST",
         headers: {
           authorization: `Bearer ${localStorage.getItem("token")}`,
-
         },
         body: projectData, // FormData object
       });
@@ -129,8 +125,6 @@ export const useProjectStore = defineStore("projectStore", {
         this.project = data;
         router.push({ name: "Home" });
       }
-
-
     },
     /********************* Delete Project  ********************** */
     async deleteProject(projectId) {
@@ -151,7 +145,6 @@ export const useProjectStore = defineStore("projectStore", {
         return data;
       }
     },
-
 
     /****************  Approve Project Register  ***************/
     async updateApprovalStatus(projectId, approved) {
@@ -222,9 +215,49 @@ export const useProjectStore = defineStore("projectStore", {
       }
     },
 
-    /**************** Get Comments by Project ********** */
-    async getCommentsByProject(projectId) {
-      const res = await fetch(`/api/projects/${projectId}/comments`, {
+    /****************  Approve Student Register  ***************/
+    async assignAdvisor(projectId, formData) {
+      const res = await fetch(`/api/assign-advisor/${projectId}`, {
+        method: "PUT",
+        headers: {
+          authorization: `Bearer ${localStorage.getItem("token")}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = res.status !== 204 ? await res.json() : {};
+      console.log(data);
+
+      if (data.errors) {
+        this.errors = data.errors;
+      } else {
+        return data;
+      }
+    },
+
+    async notifyDeadline(projectId) {
+      const res = await fetch(`/api/projects/${projectId}/notify-deadline`, {
+        method: "POST",
+        headers: {
+          authorization: `Bearer ${localStorage.getItem("token")}`,
+          "Content-Type": "application/json",
+        },
+      });
+
+      const data = res.status !== 204 ? await res.json() : {};
+      console.log(data);
+
+      if (data.errors) {
+        this.errors = data.errors;
+      } else {
+        return data;
+      }
+    },
+
+    /**************** Get Approved projects by Student********** */
+    async getApprovedProjectsByStudent(studentId) {
+      const res = await fetch(`/api/projects/student/${studentId}/approved`, {
         method: "GET",
         headers: {
           authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -242,58 +275,13 @@ export const useProjectStore = defineStore("projectStore", {
       }
     },
 
-
-
-    /****************  Approve Student Register  ***************/
-    async assignAdvisor(projectId, formData) {
-      const res = await fetch(`/api/assign-advisor/${projectId}`, {
-        method: 'PUT',
+    async getProjectById(projectId) {
+      const res = await fetch(`/api/projects/${projectId}`, {
+        method: "GET",
         headers: {
           authorization: `Bearer ${localStorage.getItem("token")}`,
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData),
-
-      });
-
-      const data = res.status !== 204 ? await res.json() : {};
-      console.log(data);
-
-      if (data.errors) {
-        this.errors = data.errors;
-      } else {
-        return data;
-      }
-    },
-
-    async notifyDeadline(projectId) {
-      const res = await fetch(`/api/projects/${projectId}/notify-deadline`, {
-        method: 'POST',
-        headers: {
-          authorization: `Bearer ${localStorage.getItem("token")}`,
-          "Content-Type": "application/json",
-        },
-      });
-
-      const data = res.status !== 204 ? await res.json() : {};
-      console.log(data);
-
-      if (data.errors) {
-        this.errors = data.errors;
-      } else {
-        return data;
-      }
-    },
-
-    /**************** Add Comment to Project ********** */
-    async addComment(projectId, content, userId) {
-      const res = await fetch(`/api/projects/${projectId}/comments`, {
-        method: "POST",
-        headers: {
-          authorization: `Bearer ${localStorage.getItem("token")}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ content, user_id: userId }),
       });
 
       const data = res.status !== 204 ? await res.json() : {};
@@ -306,5 +294,4 @@ export const useProjectStore = defineStore("projectStore", {
       }
     },
   },
-
 });

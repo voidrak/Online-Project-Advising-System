@@ -98,7 +98,7 @@ class ProjectController extends Controller
             'student_id' => 'required|exists:users,student_id',
             'advisor_id' => 'required|exists:users,id',
             'department' => 'required|string|max:255',
-            'document' => 'nullable|file|mimes:pdf,doc,docx,jpeg,png|max:2048',
+            'document' => 'nullable|file|mimes:pdf,doc,docx,jpeg,png',
             'due_date' => 'nullable|date',
             'approved' => 'boolean',
             'completed' => 'boolean',
@@ -189,5 +189,17 @@ class ProjectController extends Controller
         Mail::to($advisorEmail)->send(new DeadlineNotification($project, $daysLeft));
 
         return response()->json(['message' => 'Deadline notification sent successfully']);
+    }
+
+    /**
+     * Get projects that belong to a specific student and are approved.
+     */
+    public function getApprovedProjectsByStudent($student_id)
+    {
+        $projects = Project::where('student_id', $student_id)
+            ->where('approved', true)
+            ->with('advisor')
+            ->get();
+        return response()->json($projects);
     }
 }
