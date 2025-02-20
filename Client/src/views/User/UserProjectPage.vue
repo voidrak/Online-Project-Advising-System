@@ -1,47 +1,46 @@
 <script setup>
-
-import ApproveProjectPopover from '@/components/Coordinator/ApproveProjectPopover.vue';
-import CoordinatorLayout from '@/layout/CoordinatorLayout.vue';
+import UserLayout from '@/layout/UserLayout.vue';
 import { useProjectStore } from '@/stores/project';
+import { computed, onMounted, ref } from 'vue';
 
-
-import { onMounted, ref } from 'vue';
-
-
-const { getUnassignedProject } = useProjectStore()
-const { deleteProject } = useProjectStore()
+const { getProjectCompleted } = useProjectStore()
 
 const projects = ref([]);
 const searchQuery = ref("")
 
 onMounted(async () => {
-  projects.value = await getUnassignedProject();
-  // console.log(projects.value);
+  projects.value = await getProjectCompleted();
+  console.log(projects.value);
 })
 
-const handleDelete = async (project) => {
-  deleteProject(project);
-  projects.value = await getUnassignedProject();
+const filteredProject = computed(() => {
+  if (!searchQuery.value) {
+    return projects.value;
+  }
+  const searchTerm = searchQuery.value.toLowerCase();
+  return projects.value.filter(project =>
+    project.project_title.toLowerCase().includes(searchTerm) ||
+    project.student.name.toLowerCase().includes(searchTerm) ||
+    project.department.toLowerCase().includes(searchTerm) ||
+    project.advisor.name.toLowerCase().includes(searchTerm)
+  );
+});
 
-}
-const handleUpdate = async () => {
-  projects.value = await getUnassignedProject();
-
-}
-
-
-
+const getYear = (dateString) => {
+  const date = new Date(dateString);
+  return date.getFullYear();
+};
 
 </script>
 
 <template>
-  <CoordinatorLayout>
+  <UserLayout>
 
-    <div class="">
-      <h1 class="text-center py-8 font-bold text-4xl text-green-700">Assign Advisor
+    <div v-if="projects" class="">
+      <h1 class="uppercase ml-8 py-8  font-bold text-4xl text-green-700">Projects
       </h1>
 
-      <!-- <div class="pt-2 relative pl-6 py-4 max-w-screen-md  text-gray-600">
+      <div class="pt-2 relative pl-6 py-4 max-w-screen-md  text-gray-600">
         <input v-model="searchQuery"
           class="border-2 w-full border-gray-300 bg-white h-10 py-2 px-5 pr-16 rounded-lg text-sm focus:outline-none"
           type="search" name="search" placeholder="Search">
@@ -56,30 +55,43 @@ const handleUpdate = async () => {
 
 
         </button>
-      </div> -->
+      </div>
 
-      <table v-if="projects.length > 0" class="min-w-full divide-y divide-gray-200 overflow-x-auto">
+      <table class="min-w-full divide-y divide-gray-200 overflow-x-auto">
         <thead class="bg-gray-50">
           <tr class="">
             <th scope="col" class="px-6 py-3 text-left text-xs font-bold  uppercase tracking-wider">
+              #
+            </th>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-bold  uppercase tracking-wider">
               Project Title
-            </th>
-            <th scope="col" class="px-6 py-3 text-left text-xs font-bold  uppercase tracking-wider">
-              Department
-            </th>
-            <th scope="col" class="px-6 py-3 text-left text-xs font-bold  uppercase tracking-wider">
-              Description
             </th>
             <th scope="col" class="px-6 py-3 text-left text-xs font-bold  uppercase tracking-wider">
               Student
             </th>
             <th scope="col" class="px-6 py-3 text-left text-xs font-bold  uppercase tracking-wider">
-              Actions
+              Department
             </th>
+
+
+            <th scope="col" class="px-6 py-3 text-left text-xs font-bold  uppercase tracking-wider">
+              Assigned
+            </th>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-bold  uppercase tracking-wider">
+              Year
+            </th>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-bold  uppercase tracking-wider ">
+              See More
+            </th>
+
           </tr>
         </thead>
         <tbody class="bg-white divide-y divide-gray-200">
-          <tr v-for="(project, index) in projects" :key="index">
+
+          <tr v-for="(project, index) in filteredProject" :key="index" class=" uppercase   ">
+            <td class="px-6 py-4 whitespace-nowrap">
+              <div class="text-sm text-gray-900">{{ index + 1 }} </div>
+            </td>
             <td class="px-6 py-4 whitespace-nowrap">
               <div class="flex items-center">
 
@@ -91,40 +103,30 @@ const handleUpdate = async () => {
               </div>
             </td>
             <td class="px-6 py-4 whitespace-nowrap">
+              <div class="text-sm text-gray-900">{{ project.student?.name }} </div>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap">
               <div class="text-sm text-gray-900">{{ project.department }} </div>
 
             </td>
-            <td class="px-6 py-4 whitespace-nowrap">
-              <div class="text-sm text-gray-900">{{ project.description }} </div>
-
+            <td class="px-6 py-4 whitespace-nowrap ">
+              <span class="" v-if="project.advisor_id">{{ project.advisor.name }}</span>
+              <span class="text-red-500" v-else>No Assigned</span>
             </td>
             <td class="px-6 py-4 whitespace-nowrap">
-              <div class="text-sm text-gray-900">{{ project.student?.name }} </div>
-
+              <span>{{ getYear(project.updated_at) }}</span>
             </td>
-            <td class="px-6 py-4 whitespace-nowrap  text-sm font-medium flex">
-              <button @click.prevent="handleDelete(project.id)"
-                class="ml-2 bg-red-500 text-white hover:bg-red-600 w-24  px-2 rounded-md py-[10px] ">Reject</button>
+            <RouterLink :to="{ name: 'UserProjectDetail', params: { id: project.id } }">
+              <td
+                class="px-6 py-4 whitespace-nowrap hover:text-white font-bold hover:cursor-pointer hover:bg-green-500">
+                <span> See More</span>
+              </td>
+            </RouterLink>
 
-              <ApproveProjectPopover @handleUpdate="handleUpdate" :projectId="project.id" />
-
-              <!-- <button @click.prevent="handleApprove(project.id)"
-                class="ml-2 bg-green-500 text-white hover:bg-green-600  px-2 rounded-md py-[10px] ">Approve Request
-              </button> -->
-
-            </td>
           </tr>
-
-
 
         </tbody>
       </table>
-
-
-      <div v-else class="mt-52">
-        <p class="text-green-500 font-bold text-center">No New Project Found To Be Assigned </p>
-      </div>
     </div>
-
-  </CoordinatorLayout>
+  </UserLayout>
 </template>

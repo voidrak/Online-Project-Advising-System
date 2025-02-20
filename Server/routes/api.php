@@ -22,6 +22,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/advisors', [UserController::class, 'getAdvisors']);
 });
 
+Route::get('/projects', [ProjectController::class, 'index']);
+Route::get('/projects/{project}', [ProjectController::class, 'show']);
+
+
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/coordinator/projects', [ProjectController::class, 'getProjectCoordinator']);
     Route::get('/coordinator/project-requests', [ProjectController::class, 'getUnassignedProject']);
@@ -30,6 +34,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/projects', [ProjectController::class, 'store']);
     Route::put('/projects/{project}', [ProjectController::class, 'update']);
     Route::get('/projects/{project}', [ProjectController::class, 'show']);
+
     Route::get('/projects/advisor/{advisor_id}', [ProjectController::class, 'getProjectsByAdvisor']);
     Route::get('/projects/advisor/{advisor_id}/approved', [ProjectController::class, 'getApprovedProjectsbyAdvisor']);
     Route::get('/projects/student/{student_id}/approved', [ProjectController::class, 'getApprovedProjectsByStudent']);
@@ -41,8 +46,6 @@ Route::middleware('auth:sanctum')->group(function () {
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/projects/{project}/comments', [CommentController::class, 'getCommentsByProject']);
     Route::post('/projects/{project}/comments', [CommentController::class, 'addComment']);
-    
-
 });
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);

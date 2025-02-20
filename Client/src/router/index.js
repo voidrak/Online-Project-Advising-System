@@ -15,8 +15,13 @@ import CoordinatorOngoingProject from "@/views/Coordinator/CoordinatorOngoingPro
 import AdvisorHome from "@/views/Advisor/AdvisorHome.vue";
 import ApprovedProjects from "@/views/Advisor/ApprovedProjects.vue";
 import CommentPage from "@/views/Advisor/CommentPage.vue";
+
 import StudentProjects from "@/views/Student/StudentProjects.vue"; // Import the new component
 import StudentCommentPage from "@/views/Student/StudentCommentPage.vue";
+
+import UserProjectPage from "@/views/User/UserProjectPage.vue";
+import UserProjectDetailPage from "@/views/User/UserProjectDetailPage.vue";
+
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -43,6 +48,18 @@ const router = createRouter({
       path: "/register",
       name: "Register",
       component: RegisterPage,
+      meta: { guest: true },
+    },
+    {
+      path: "/projects",
+      name: "UserProject",
+      component: UserProjectPage,
+      meta: { guest: true },
+    },
+    {
+      path: "/projects/:id",
+      name: "UserProjectDetail",
+      component: UserProjectDetailPage,
       meta: { guest: true },
     },
     {

@@ -18,7 +18,8 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        $projects = Project::all();
+
+        $projects = Project::where('completed', true)->with('student', 'advisor')->get();
         return response()->json($projects);
     }
 
@@ -83,7 +84,7 @@ class ProjectController extends Controller
      */
     public function show(Project $project)
     {
-        return response()->json($project);
+        return response()->json($project->load('student', 'advisor'));
     }
 
     /**
@@ -149,7 +150,8 @@ class ProjectController extends Controller
         $projects = Project::where('advisor_id', $advisor_id)->where('approved', false)->with('student')->get();
         return response()->json($projects);
     }
-    function getApprovedProjectsbyAdvisor($advisor_id){
+    function getApprovedProjectsbyAdvisor($advisor_id)
+    {
         $projects = Project::where('approved', true)->where('advisor_id', $advisor_id)->with('student')->get();
         return response()->json($projects);
     }
