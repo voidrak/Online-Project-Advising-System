@@ -15,6 +15,7 @@ import CoordinatorOngoingProject from "@/views/Coordinator/CoordinatorOngoingPro
 import AdvisorHome from "@/views/Advisor/AdvisorHome.vue";
 import ApprovedProjects from "@/views/Advisor/ApprovedProjects.vue";
 import CommentPage from "@/views/Advisor/CommentPage.vue";
+import UserProjectPage from "@/views/User/UserProjectPage.vue";
 
 
 const router = createRouter({
@@ -42,6 +43,12 @@ const router = createRouter({
       path: "/register",
       name: "Register",
       component: RegisterPage,
+      meta: { guest: true },
+    },
+    {
+      path: "/projects",
+      name: "UserProject",
+      component: UserProjectPage,
       meta: { guest: true },
     },
     {
