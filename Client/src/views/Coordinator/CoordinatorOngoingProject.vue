@@ -8,28 +8,47 @@ import { useProjectStore } from '@/stores/project';
 import { onMounted, ref } from 'vue';
 
 
-const { getUnassignedProject } = useProjectStore()
-const { deleteProject } = useProjectStore()
+const { getAllOngoingProjects } = useProjectStore()
+const { notifyDeadline } = useProjectStore()
 
 const projects = ref([]);
 const searchQuery = ref("")
 
 onMounted(async () => {
-  projects.value = await getUnassignedProject();
+  projects.value = await getAllOngoingProjects();
   // console.log(projects.value);
 })
 
-const handleDelete = async (project) => {
-  deleteProject(project);
-  projects.value = await getUnassignedProject();
+const handleNotifyDeadline = async (projectId) => {
+  notifyDeadline(projectId)
+  // projects.value = await getAllOngoingProjects();
 
 }
 const handleUpdate = async () => {
-  projects.value = await getUnassignedProject();
+  projects.value = await getAllOngoingProjects();
 
 }
 
+const calculateRemainingDays = (dueDate) => {
+  const today = new Date();
+  const due = new Date(dueDate);
+  const diffInMs = due.getTime() - today.getTime();
+  const diffInDays = Math.ceil(diffInMs / (1000 * 60 * 60 * 24));
+  return diffInDays;
+};
 
+const getRemainingDaysText = (dueDate) => {
+  const remainingDays = calculateRemainingDays(dueDate);
+  if (remainingDays > 0) {
+    return `${remainingDays} days`;
+  } else {
+    return "Deadline Passed";
+  }
+};
+
+const isDeadlinePassed = (dueDate) => {
+  return calculateRemainingDays(dueDate) <= 0;
+};
 
 
 </script>
@@ -38,8 +57,7 @@ const handleUpdate = async () => {
   <CoordinatorLayout>
 
     <div class="">
-      <h1 class="text-center py-8 font-bold text-4xl text-blue-700">Assign Advisor
-      </h1>
+      <h1 class="text-center py-8 font-bold text-4xl text-blue-700"> Ongoing Projects </h1>
 
       <!-- <div class="pt-2 relative pl-6 py-4 max-w-screen-md  text-gray-600">
         <input v-model="searchQuery"
@@ -68,12 +86,16 @@ const handleUpdate = async () => {
               Department
             </th>
             <th scope="col" class="px-6 py-3 text-left text-xs font-bold  uppercase tracking-wider">
-              Description
-            </th>
-            <th scope="col" class="px-6 py-3 text-left text-xs font-bold  uppercase tracking-wider">
               Student
             </th>
             <th scope="col" class="px-6 py-3 text-left text-xs font-bold  uppercase tracking-wider">
+              Advisor
+            </th>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-bold  uppercase tracking-wider">
+              Remaining Days
+            </th>
+
+            <th scope="col" class="px-6 py-3 text-center text-xs font-bold  uppercase tracking-wider">
               Actions
             </th>
           </tr>
@@ -94,19 +116,27 @@ const handleUpdate = async () => {
               <div class="text-sm text-gray-900">{{ project.department }} </div>
 
             </td>
-            <td class="px-6 py-4 whitespace-nowrap">
-              <div class="text-sm text-gray-900">{{ project.description }} </div>
 
-            </td>
             <td class="px-6 py-4 whitespace-nowrap">
               <div class="text-sm text-gray-900">{{ project.student?.name }} </div>
 
             </td>
-            <td class="px-6 py-4 whitespace-nowrap  text-sm font-medium flex">
-              <button @click.prevent="handleDelete(project.id)"
-                class="ml-2 bg-red-500 text-white hover:bg-red-600 w-24  px-2 rounded-md py-[10px] ">Reject</button>
+            <td class="px-6 py-4 whitespace-nowrap">
+              <div class="text-sm text-gray-900">{{ project.advisor?.name }} </div>
 
-              <ApproveProjectPopover @handleUpdate="handleUpdate" :projectId="project.id" />
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap" :class="{ 'text-red-500': isDeadlinePassed(project.due_date) }">
+              <div class="text-sm" :class="{ 'text-red-500 font-semibold': isDeadlinePassed(project.due_date) }">
+                {{ getRemainingDaysText(project.due_date) }}
+              </div>
+
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap  text-sm font-medium flex">
+              <button @click.prevent="handleNotifyDeadline(project.id)"
+                class="ml-24 mx-auto bg-green-500 text-white hover:bg-green-600    px-2 rounded-md py-[10px] ">Remember
+                and
+                Notify</button>
+
 
               <!-- <button @click.prevent="handleApprove(project.id)"
                 class="ml-2 bg-green-500 text-white hover:bg-green-600  px-2 rounded-md py-[10px] ">Approve Request

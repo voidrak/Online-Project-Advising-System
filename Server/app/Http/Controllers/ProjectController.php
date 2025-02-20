@@ -6,6 +6,10 @@ use App\Models\Project;
 use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\DeadlineNotification; // Create this Mailable
+use Carbon\Carbon; // Import Carbon
 
 class ProjectController extends Controller
 {
@@ -18,6 +22,13 @@ class ProjectController extends Controller
         return response()->json($projects);
     }
 
+    public function getProjectCoordinator()
+    {
+        $user = Auth::user();
+        $projects = Project::where('department', $user->department)->with('student', 'advisor')->get();
+        return response()->json($projects);
+    }
+
     /**
      * Get project requests (projects with approved = false).
      */
@@ -27,10 +38,20 @@ class ProjectController extends Controller
         return response()->json($projects);
     }
 
+    public function getUnassignedProject()
+    {
+        $projects = Project::where('advisor_id', null)->with('student')->get();
+        return response()->json($projects);
+    }
+
 
     public function getAllOngoingProjects()
     {
-        $projects = Project::where('completed', false)->with('student', 'advisor')->get();
+        $projects = Project::where('completed', false)
+            ->whereNotNull('advisor_id')
+            ->with('student', 'advisor')
+            ->orderBy('due_date', 'asc')
+            ->get();
         return response()->json($projects);
     }
 
@@ -39,7 +60,7 @@ class ProjectController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    { 
+    {
         $validatedData = $request->validate([
             'project_title' => 'required|string|max:255',
             'description' => 'nullable|string',
@@ -53,10 +74,8 @@ class ProjectController extends Controller
             $validatedData['document'] = $path;
         }
 
-   
-        return $request->user()->projects()->create($validatedData);
-       
 
+        return $request->user()->projects()->create($validatedData);
     }
 
     /**
@@ -107,6 +126,7 @@ class ProjectController extends Controller
         return response()->json(['message' => 'Project deleted successfully']);
     }
 
+
     public function updateApprovalStatus(Request $request, Project $project)
     {
         // dd($request->all());
@@ -132,5 +152,40 @@ class ProjectController extends Controller
     function getApprovedProjectsbyAdvisor($advisor_id){
         $projects = Project::where('approved', true)->where('advisor_id', $advisor_id)->with('student')->get();
         return response()->json($projects);
+    }
+    public function assignAdvisor(Request $request, Project $project)
+    {
+        $validatedData = $request->validate([
+            'advisor_id' => 'required|exists:users,id',
+            'due_date' => 'required|date',
+        ]);
+
+        $project->advisor_id = $validatedData['advisor_id'];
+        $project->due_date = $validatedData['due_date'];
+        // $project->approved = true;
+        $project->save();
+
+        return response()->json(['message' => 'Advisor assigned successfully']);
+    }
+
+    public function notifyDeadline(Project $project)
+    {
+        // Validate that the project exists and the user has permission
+
+        // Get student and advisor emails
+        $studentEmail = $project->student->email;
+        $advisorEmail = $project->advisor->email;
+
+        // Calculate days left
+        $dueDate = Carbon::parse($project->due_date);
+        $daysLeft = ceil(now()->diffInDays($dueDate, false));
+
+        // Send email to student
+        Mail::to($studentEmail)->send(new DeadlineNotification($project, $daysLeft));
+
+        // Send email to advisor
+        Mail::to($advisorEmail)->send(new DeadlineNotification($project, $daysLeft));
+
+        return response()->json(['message' => 'Deadline notification sent successfully']);
     }
 }

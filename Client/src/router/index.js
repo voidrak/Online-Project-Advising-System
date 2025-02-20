@@ -11,9 +11,12 @@ import AddCoordinator from "@/views/Admin/AddCoordinator.vue";
 import AddAdvisor from "@/views/Admin/AddAdvisor.vue";
 import AdminOngoingProjects from "@/views/Admin/AdminOngoingProjects.vue";
 import CoordinatorHome from "@/views/Coordinator/CoordinatorHome.vue";
+import CoordinatorAllProject from "@/views/Coordinator/CoordinatorAllProject.vue";
+import CoordinatorOngoingProject from "@/views/Coordinator/CoordinatorOngoingProject.vue";
 import AdvisorHome from "@/views/Advisor/AdvisorHome.vue";
 import ApprovedProjects from "@/views/Advisor/ApprovedProjects.vue";
 import CommentPage from "@/views/Advisor/CommentPage.vue";
+
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -67,13 +70,6 @@ const router = createRouter({
       meta: { admin: true },
     },
     {
-      path: "/admin/ongoing-projects",
-      name: "AdminOngoingProjects",
-      component: AdminOngoingProjects,
-      meta: { admin: true },
-    },
-
-    {
       path: "/unApprovedStudent",
       name: "UnApprovedStudent",
       component: UnApprovedStudentHome,
@@ -86,6 +82,7 @@ const router = createRouter({
       meta: { coordinator: true },
     },
     {
+
       path: "/advisor",
       name: "AdvisorHome",
       component: AdvisorHome,
@@ -103,6 +100,19 @@ const router = createRouter({
       component: CommentPage,
       props: true,
     },
+    {
+      path: '/coordinator/projects',
+      name: 'CoordinatorAllProject',
+      component: CoordinatorAllProject,
+      meta: { coordinator: true },
+    },
+    {
+      path: '/coordinator/ongoing-projects',
+      name: 'CoordinatorOngoingProject',
+      component: CoordinatorOngoingProject,
+      meta: { coordinator: true },
+    },
+
   ],
 });
 
