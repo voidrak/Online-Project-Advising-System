@@ -1,15 +1,15 @@
 <script setup>
 import { useAuthStore } from "@/stores/auth";
 const authStore = useAuthStore();
-
-
 </script>
 
 <template>
   <!--start the project-->
-  <div id="main-wrapper" class=" flex p-5 xl:pr-0 bg-[#f0f5f9]">
-    <aside id="application-sidebar-brand"
-      class="hs-overlay hs-overlay-open:translate-x-0 -translate-x-full  transform hidden xl:block xl:translate-x-0 xl:end-auto xl:bottom-0 fixed xl:top-5 xl:left-auto top-0 left-0 with-vertical h-screen z-[999] shrink-0  w-[280px] shadow-md xl:rounded-md rounded-none bg-white left-sidebar   transition-all duration-300">
+  <div id="main-wrapper" class="flex p-5 xl:pr-0 bg-[#f0f5f9]">
+    <aside
+      id="application-sidebar-brand"
+      class="hs-overlay hs-overlay-open:translate-x-0 -translate-x-full transform hidden xl:block xl:translate-x-0 xl:end-auto xl:bottom-0 fixed xl:top-5 xl:left-auto top-0 left-0 with-vertical h-screen z-[999] shrink-0 w-[280px] shadow-md xl:rounded-md rounded-none bg-white left-sidebar transition-all duration-300"
+    >
       <!-- ---------------------------------- -->
       <!-- Start Vertical Layout Sidebar -->
       <!-- ---------------------------------- -->
@@ -17,49 +17,88 @@ const authStore = useAuthStore();
         <!-- Logo -->
       </div>
       <div class="scroll-sidebar" data-simplebar="">
-        <nav class=" w-full flex flex-col sidebar-nav px-4 mt-5">
-          <ul id="sidebarnav" class="text-gray-600 text-sm  divide-y-2 divide-gray-500">
+        <nav class="w-full flex flex-col sidebar-nav px-4 mt-5">
+          <ul
+            id="sidebarnav"
+            class="text-gray-600 text-sm divide-y-2 divide-gray-500"
+          >
             <li class="text-xs font-bold pb-[15px]">
-              <i class="ti ti-dots nav-small-cap-icon text-lg hidden text-center"></i>
+              <i
+                class="ti ti-dots nav-small-cap-icon text-lg hidden text-center"
+              ></i>
               <span class="text-xs text-gray-400 font-semibold">HOME</span>
             </li>
 
-            <RouterLink :to="{ name: 'AdminHome' }" class="sidebar-item my-2">
-              <div class="sidebar-link gap-3 py-5 my-1  cursor-pointer flex items-center relative  rounded-md   w-full">
-                <svg class="size-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+            <RouterLink :to="{ name: 'AdvisorHome' }" class="sidebar-item my-2">
+              <div
+                class="sidebar-link gap-3 py-5 my-1 cursor-pointer flex items-center relative rounded-md w-full"
+              >
+                <svg
+                  class="size-6"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 448 512"
+                >
                   <path
-                    d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512l388.6 0c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304l-91.4 0z" />
-                </svg> <span class="text-xl font-semibold">Users</span>
-
+                    d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512l388.6 0c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304l-91.4 0z"
+                  />
+                </svg>
+                <span class="text-xl font-semibold">Advisor Home</span>
               </div>
             </RouterLink>
-            <RouterLink :to="{ name: 'AdminRegistrationRequest' }" class="sidebar-item my-2">
-              <div class="sidebar-link gap-3 py-5 my-1  cursor-pointer flex items-center relative  rounded-md   w-full">
-                <svg class="size-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+            <RouterLink
+              :to="{ name: 'ApprovedProjects' }"
+              class="sidebar-item my-2"
+            >
+              <div
+                class="sidebar-link gap-3 py-5 my-1 cursor-pointer flex items-center relative rounded-md w-full"
+              >
+                <svg
+                  class="size-6"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 448 512"
+                >
                   <path
-                    d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512l388.6 0c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304l-91.4 0z" />
-                </svg> <span class="text-xl font-semibold"> Registration Request</span>
-
+                    d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512l388.6 0c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304l-91.4 0z"
+                  />
+                </svg>
+                <span class="text-xl font-semibold">Approved Projects</span>
               </div>
             </RouterLink>
-            <RouterLink :to="{ name: 'AddCoordinator' }" class="sidebar-item my-2">
-              <div class="sidebar-link gap-3 py-5 my-1  cursor-pointer flex items-center relative  rounded-md   w-full">
-                <svg class="size-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+            <!-- <RouterLink
+              :to="{ name: 'AddCoordinator' }"
+              class="sidebar-item my-2"
+            >
+              <div
+                class="sidebar-link gap-3 py-5 my-1 cursor-pointer flex items-center relative rounded-md w-full"
+              >
+                <svg
+                  class="size-6"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 448 512"
+                >
                   <path
-                    d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512l388.6 0c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304l-91.4 0z" />
-                </svg> <span class="text-xl font-semibold"> Register Coordinator</span>
-
+                    d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512l388.6 0c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304l-91.4 0z"
+                  />
+                </svg>
+                <span class="text-xl font-semibold"> Advisor </span>
               </div>
-            </RouterLink>
-            <RouterLink :to="{ name: 'AddAdvisor' }" class="sidebar-item my-2">
-              <div class="sidebar-link gap-3 py-5 my-1  cursor-pointer flex items-center relative  rounded-md   w-full">
-                <svg class="size-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+            </RouterLink> -->
+            <!-- <RouterLink :to="{ name: 'AddAdvisor' }" class="sidebar-item my-2">
+              <div
+                class="sidebar-link gap-3 py-5 my-1 cursor-pointer flex items-center relative rounded-md w-full"
+              >
+                <svg
+                  class="size-6"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 448 512"
+                >
                   <path
-                    d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512l388.6 0c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304l-91.4 0z" />
-                </svg> <span class="text-xl font-semibold"> Register Advisor</span>
-
+                    d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512l388.6 0c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304l-91.4 0z"
+                  />
+                </svg>
+                <span class="text-xl font-semibold"> Advisor</span>
               </div>
-            </RouterLink>
+            </RouterLink> -->
             <!-- <RouterLink :to="{ name: 'AdminOngoingProjects' }" class="sidebar-item my-2">
               <div class="sidebar-link gap-3 py-5 my-1  cursor-pointer flex items-center relative  rounded-md   w-full">
                 <svg class="size-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
@@ -74,38 +113,36 @@ const authStore = useAuthStore();
       </div>
 
       <!-- Bottom Upgrade Option -->
-      <div class="m-4  relative grid">
-        <button @click="authStore.logout" class="text-base font-semibold hover:bg-red-700 btn">Log Out</button>
+      <div class="m-4 relative grid">
+        <button
+          @click="authStore.logout"
+          class="text-base font-semibold hover:bg-red-700 btn"
+        >
+          Log Out
+        </button>
       </div>
       <!-- </aside> -->
     </aside>
-    <div class=" w-full page-wrapper xl:px-6 px-0">
-
+    <div class="w-full page-wrapper xl:px-6 px-0">
       <!-- Main Content -->
-      <main class="h-full  max-w-full  ">
+      <main class="h-full max-w-full">
         <div class="container full-container p-0 flex flex-col gap-6">
           <!--  Header Start -->
-          <header class=" bg-white shadow-md text-center    text-2xl font-semibold rounded-md w-full  py-4 px-6">
-
-            Admin Page
-
+          <header
+            class="bg-white shadow-md text-center text-2xl font-semibold rounded-md w-full py-4 px-6"
+          >
+            Advisors Page
           </header>
           <!--  Header End -->
         </div>
-        <div class=" min-h-[calc(100vh-110px)]">
+        <div class="min-h-[calc(100vh-110px)]">
           <slot></slot>
         </div>
       </main>
       <!-- Main Content End -->
-
     </div>
   </div>
   <!--end of project-->
-
-
-
-
-
 </template>
 
 <style scoped>
@@ -181,7 +218,7 @@ const authStore = useAuthStore();
 
 .simplebar-content:before,
 .simplebar-content:after {
-  content: ' ';
+  content: " ";
   display: table;
 }
 
@@ -268,7 +305,7 @@ const authStore = useAuthStore();
 
 .simplebar-scrollbar:before {
   position: absolute;
-  content: '';
+  content: "";
   background: black;
   border-radius: 7px;
   left: 2px;
@@ -310,7 +347,6 @@ const authStore = useAuthStore();
   width: auto;
 }
 
-
 .simplebar-dummy-scrollbar-size {
   direction: rtl;
   position: fixed;
@@ -323,7 +359,7 @@ const authStore = useAuthStore();
   -ms-overflow-style: scrollbar !important;
 }
 
-.simplebar-dummy-scrollbar-size>div {
+.simplebar-dummy-scrollbar-size > div {
   width: 200%;
   height: 200%;
   margin: 10px 0;
@@ -338,7 +374,6 @@ const authStore = useAuthStore();
   -ms-overflow-style: none;
 }
 
-
 .simplebar-scrollbar:before {
   background: rgba(0, 0, 0, 0.5) !important;
 }
@@ -346,7 +381,6 @@ const authStore = useAuthStore();
 .left-sidebar .scroll-sidebar {
   height: calc(100vh - 180px);
 }
-
 
 #sidebarnav .sidebar-item .sidebar-link::before {
   position: absolute;
@@ -386,6 +420,5 @@ const authStore = useAuthStore();
   .page-wrapper {
     margin-left: 0px;
   }
-
 }
 </style>

@@ -1,48 +1,47 @@
 <script setup>
-import AdminLayout from '@/layout/AdminLayout.vue';
+
+import ApproveProjectPopover from '@/components/Coordinator/ApproveProjectPopover.vue';
+import CoordinatorLayout from '@/layout/CoordinatorLayout.vue';
 import { useProjectStore } from '@/stores/project';
 
 
-import { computed, onMounted, reactive, ref } from 'vue';
+import { onMounted, ref } from 'vue';
 
-const { getAllOngoingProjects } = useProjectStore()
+
+const { getUnassignedProject } = useProjectStore()
 const { deleteProject } = useProjectStore()
 
-const onGoingProject = ref([]);
+const projects = ref([]);
 const searchQuery = ref("")
 
 onMounted(async () => {
-  onGoingProject.value = await getAllOngoingProjects();
-  console.log(onGoingProject.value);
+  projects.value = await getUnassignedProject();
+  // console.log(projects.value);
 })
 
 const handleDelete = async (project) => {
   deleteProject(project);
-  onGoingProject.value = await getAllOngoingProjects();
+  projects.value = await getUnassignedProject();
+
+}
+const handleUpdate = async () => {
+  projects.value = await getUnassignedProject();
 
 }
 
-const filteredOngoingProject = computed(() => {
-  if (!searchQuery.value) {
-    return onGoingProject.value;
-  }
-  const searchTerm = searchQuery.value.toLowerCase();
-  return onGoingProject.value.filter(project =>
-    project.name.toLowerCase().includes(searchTerm) ||
-    project.role.toLowerCase().includes(searchTerm) ||
-    project.department.toLowerCase().includes(searchTerm)
-  );
-});
+
+
 
 </script>
 
 <template>
-  <AdminLayout>
-    <div v-if="onGoingProject" class="">
-      <h1 class="text-center py-8 font-bold text-4xl text-blue-700">Ongoing Projects
+  <CoordinatorLayout>
+
+    <div class="">
+      <h1 class="text-center py-8 font-bold text-4xl text-green-700">Assign Advisor
       </h1>
 
-      <div class="pt-2 relative pl-6 py-4 max-w-screen-md  text-gray-600">
+      <!-- <div class="pt-2 relative pl-6 py-4 max-w-screen-md  text-gray-600">
         <input v-model="searchQuery"
           class="border-2 w-full border-gray-300 bg-white h-10 py-2 px-5 pr-16 rounded-lg text-sm focus:outline-none"
           type="search" name="search" placeholder="Search">
@@ -57,30 +56,30 @@ const filteredOngoingProject = computed(() => {
 
 
         </button>
-      </div>
+      </div> -->
 
-      <table class="min-w-full divide-y divide-gray-200 overflow-x-auto">
+      <table v-if="projects.length > 0" class="min-w-full divide-y divide-gray-200 overflow-x-auto">
         <thead class="bg-gray-50">
           <tr class="">
             <th scope="col" class="px-6 py-3 text-left text-xs font-bold  uppercase tracking-wider">
-              name
+              Project Title
             </th>
             <th scope="col" class="px-6 py-3 text-left text-xs font-bold  uppercase tracking-wider">
               Department
             </th>
             <th scope="col" class="px-6 py-3 text-left text-xs font-bold  uppercase tracking-wider">
-              email
+              Description
             </th>
             <th scope="col" class="px-6 py-3 text-left text-xs font-bold  uppercase tracking-wider">
-              Type
+              Student
             </th>
             <th scope="col" class="px-6 py-3 text-left text-xs font-bold  uppercase tracking-wider">
-              Action
+              Actions
             </th>
           </tr>
         </thead>
         <tbody class="bg-white divide-y divide-gray-200">
-          <tr v-for="(project, index) in filteredOngoingProject" :key="index">
+          <tr v-for="(project, index) in projects" :key="index">
             <td class="px-6 py-4 whitespace-nowrap">
               <div class="flex items-center">
 
@@ -96,15 +95,23 @@ const filteredOngoingProject = computed(() => {
 
             </td>
             <td class="px-6 py-4 whitespace-nowrap">
-              {{ project.email }}
+              <div class="text-sm text-gray-900">{{ project.description }} </div>
+
             </td>
             <td class="px-6 py-4 whitespace-nowrap">
-              {{ project.role }}
+              <div class="text-sm text-gray-900">{{ project.student?.name }} </div>
+
             </td>
             <td class="px-6 py-4 whitespace-nowrap  text-sm font-medium flex">
               <button @click.prevent="handleDelete(project.id)"
-                class="ml-2 bg-red-500 text-white hover:bg-red-600  px-1 rounded-md py-[5px] ">Delete</button>
-              <!-- <button class="ml-2 bg-green-500 text-white hover:bg-green-600  px-1 rounded-md py-[5px] ">Update</button> -->
+                class="ml-2 bg-red-500 text-white hover:bg-red-600 w-24  px-2 rounded-md py-[10px] ">Reject</button>
+
+              <ApproveProjectPopover @handleUpdate="handleUpdate" :projectId="project.id" />
+
+              <!-- <button @click.prevent="handleApprove(project.id)"
+                class="ml-2 bg-green-500 text-white hover:bg-green-600  px-2 rounded-md py-[10px] ">Approve Request
+              </button> -->
+
             </td>
           </tr>
 
@@ -112,6 +119,12 @@ const filteredOngoingProject = computed(() => {
 
         </tbody>
       </table>
+
+
+      <div v-else class="mt-52">
+        <p class="text-green-500 font-bold text-center">No New Project Found To Be Assigned </p>
+      </div>
     </div>
-  </AdminLayout>
+
+  </CoordinatorLayout>
 </template>
