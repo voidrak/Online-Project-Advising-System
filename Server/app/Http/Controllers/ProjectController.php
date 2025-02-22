@@ -55,19 +55,18 @@ class ProjectController extends Controller
             ->get();
         return response()->json($projects);
     }
-
-
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
+        // dd($request->all());
         $validatedData = $request->validate([
             'project_title' => 'required|string|max:255',
             'description' => 'nullable|string',
             // 'student_id' => 'required|exists:users,student_id',
             'department' => 'required|string|max:255',
-            'document' => 'nullable|file|mimes:pdf,doc,docx,jpeg,png|max:6048',
+            'document' => 'nullable|file|mimes:pdf,doc,docx,jpeg,png',
         ]);
 
         if ($request->hasFile('document')) {
@@ -99,13 +98,8 @@ class ProjectController extends Controller
             'advisor_id' => 'required|exists:users,id',
             'department' => 'required|string|max:255',
             'document' => 'nullable|file|mimes:pdf,doc,docx,jpeg,png',
-            'due_date' => 'nullable|date',
-            'approved' => 'boolean',
-            'completed' => 'boolean',
         ]);
 
-        $validatedData['approved'] = filter_var($validatedData['approved'], FILTER_VALIDATE_BOOLEAN);
-        $validatedData['completed'] = filter_var($validatedData['completed'], FILTER_VALIDATE_BOOLEAN);
 
         if ($request->hasFile('document')) {
             $path = $request->file('document')->store('documents', 'public');
@@ -200,5 +194,27 @@ class ProjectController extends Controller
             ->with('advisor')
             ->get();
         return response()->json($projects);
+    }
+
+    public function updateDocument(Request $request, Project $project)
+    {
+        // dd($project);
+        $validatedData = $request->validate([
+            'document' => 'required|file|mimes:pdf,doc,docx,jpeg,png,txt,csv,xls,xlsx,ppt,pptx',
+        ]);
+
+        // if ($request->hasFile('document')) {
+        //     $path = $request->file('document')->store('documents', 'public');
+        //     $project->document = $path;
+        //     $project->save();
+        //         }
+
+        if ($request->hasFile('document')) {
+            $path = $request->file('document')->store('documents', 'public');
+            $validatedData['document'] = $path;
+        }
+
+        $project->update($validatedData);
+        return response()->json(['message' => 'Document updated successfully', 'document' => $path]);
     }
 }

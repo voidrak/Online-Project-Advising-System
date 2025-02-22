@@ -11,9 +11,9 @@ const authStore = useAuthStore();
       <h1
         class="font-bold text-gray-700 text-3xl md:text-6xl leading-tight mb-10"
       >
-        Empowering <br />
-        Students' <br />
-        Projects
+        Online <br />
+        Project Advising <br />
+        System!
       </h1>
       <p class="font-normal text-gray-500 text-sm md:text-lg mb-10">
         A digital platform for project advising and management. <br />

@@ -11,7 +11,7 @@ export const useProjectStore = defineStore("projectStore", {
     /************************ Get All Project    **************** */
     async getProject(projectId) {
       const res = await fetch(`/api/projects/${projectId}`, {
-        method: 'GET',
+        method: "GET",
         headers: {
           authorization: `Bearer ${localStorage.getItem("token")}`,
           "Content-Type": "application/json",
@@ -49,8 +49,8 @@ export const useProjectStore = defineStore("projectStore", {
     /************************ Get Completed Project    **************** */
 
     async getProjectCompleted() {
-      const res = await fetch('/api/projects', {
-        method: 'GET',
+      const res = await fetch("/api/projects", {
+        method: "GET",
         headers: {
           authorization: `Bearer ${localStorage.getItem("token")}`,
           "Content-Type": "application/json",
@@ -110,6 +110,9 @@ export const useProjectStore = defineStore("projectStore", {
     /********************* Register Project***********/
 
     async registerProject(projectData) {
+      // for (const [key, value] of projectData.entries()) {
+      //   console.log(`${key}: ${value}`);
+      // }
       const res = await fetch("/api/projects", {
         method: "POST",
         headers: {
@@ -291,6 +294,31 @@ export const useProjectStore = defineStore("projectStore", {
         this.errors = data.errors;
       } else {
         return data;
+      }
+    },
+
+    async updateProjectDocument(projectId, formData) {
+      // console.log(file.value);
+      // const formData = new FormData();
+      // formData.append("document", file);
+      for (const [key, value] of formData.entries()) {
+        console.log(`${key}: ${value}`);
+      }
+      const res = await fetch(`/api/projects/${projectId}/document`, {
+        method: "PUT",
+        headers: {
+          authorization: `Bearer ${localStorage.getItem("token")}`,
+          "Content-Type": "multipart/form-data",
+        },
+        body: formData,
+      });
+
+      const data = await res.json();
+      if (data.errors) {
+        this.errors = data.errors;
+      } else {
+        return data;
+        console.log("Document updated successfully");
       }
     },
   },
