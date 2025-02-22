@@ -16,8 +16,11 @@ const route = useRoute();
 const projectId = ref(route.params.projectId);
 const projectName = ref("");
 const projectDescription = ref("");
-const { getProjectById } = useProjectStore(); // Assuming you have a project store
-
+const { getProjectById, updateProjectDocument } = useProjectStore(); // Assuming you have a project store
+const currentFile = ref(null);
+const currentFileUrl = ref(null);
+const selectedFile = ref(null); // Add this line
+const baseUrl = import.meta.env.VITE_BASE_URL;
 const formatDate = (dateString) => {
   const options = {
     month: "long",
@@ -27,14 +30,22 @@ const formatDate = (dateString) => {
   };
   return new Date(dateString).toLocaleDateString(undefined, options);
 };
+const formData = ref(new FormData());
 
 onMounted(async () => {
   await authStore.getUser();
   comments.value = await getCommentsByProject(projectId.value);
   const project = await getProjectById(projectId.value);
+  console.log(project.id);
   projectName.value = project.project_title;
   projectDescription.value = project.description;
+  currentFile.value = project.document; // Assuming the document field contains the file path
+  currentFileUrl.value = `${baseUrl}/storage/${project.document}`; // Assuming the file is stored in the public storage
   console.log(projectName.value);
+
+  // formData.value.set("project_id", projectId.value);
+  formData.value.set("user_id", authStore.user.id);
+  formData.value.set("document", null);
 });
 
 const handleAddComment = async () => {
@@ -42,6 +53,22 @@ const handleAddComment = async () => {
     await addComment(projectId.value, newComment.value, authStore.user.id);
     comments.value = await getCommentsByProject(projectId.value);
     newComment.value = "";
+  }
+};
+
+const handleFileChange = (event) => {
+  selectedFile.value = event.target.files[0];
+  formData.value.set("document", event.target.files[0]);
+};
+
+const handleFileUpload = async () => {
+  if (selectedFile.value) {
+    console.log(selectedFile.value);
+    await updateProjectDocument(projectId.value, formData.value);
+    currentFile.value = selectedFile.value.name; // Update the current file display
+    currentFileUrl.value = URL.createObjectURL(selectedFile.value); // Update the current file URL
+    selectedFile.value = null;
+    console.log("File uploaded successfully");
   }
 };
 </script>
@@ -62,8 +89,8 @@ const handleAddComment = async () => {
       <p class="text-left">Description: {{ projectDescription }}</p>
     </div>
 
-    <div class="w-full max-w-4xl mx-auto p-4">
-      <div class="bg-white shadow-md rounded-lg p-4">
+    <div class="w-full mx-auto p-4 flex">
+      <div class="bg-white shadow-md rounded-lg p-4 w-3/4">
         <div class="flex flex-col space-y-4">
           <div
             v-for="comment in comments"
@@ -93,6 +120,45 @@ const handleAddComment = async () => {
           >
             Send
           </button>
+        </div>
+      </div>
+      <div class="w-1/4 p-4">
+        <div class="overflow-x-hidden">
+          <label for="document" class="mb-2 block text-sm text-gray-800"
+            >Document</label
+          >
+          <input
+            @change="handleFileChange"
+            id="document"
+            name="document"
+            type="file"
+            accept=".pdf,.doc,.docx,.jpeg,.png"
+            class="w-full rounded-md border border-gray-300 bg-white px-4 py-3 text-sm text-gray-800 outline-bg-light-green"
+          />
+          <button
+            @click="handleFileUpload"
+            class="bg-blue-500 text-white p-2 mt-2 w-full rounded-lg"
+          >
+            Upload
+          </button>
+          <div
+            v-if="currentFile"
+            class="mt-4 bg-green-500 text-white p-2 w-full rounded-lg text-center flex items-center justify-center"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-6 h-6 mr-2"
+              viewBox="0 0 384 512"
+            >
+              <path
+                fill="#fff"
+                d="M320 464c8.8 0 16-7.2 16-16l0-288-80 0c-17.7 0-32-14.3-32-32l0-80L64 48c-8.8 0-16 7.2-16 16l0 384c0 8.8 7.2 16 16 16l256 0zM0 64C0 28.7 28.7 0 64 0L229.5 0c17 0 33.3 6.7 45.3 18.7l90.5 90.5c12 12 18.7 28.3 18.7 45.3L384 448c0 35.3-28.7 64-64 64L64 512c-35.3 0-64-28.7-64-64L0 64z"
+              />
+            </svg>
+            <a :href="currentFileUrl" download target="_blank" class="">
+              Download
+            </a>
+          </div>
         </div>
       </div>
     </div>
