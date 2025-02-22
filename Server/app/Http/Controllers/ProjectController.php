@@ -197,7 +197,6 @@ class ProjectController extends Controller
     public function getApprovedProjectsByStudent($student_id)
     {
         $projects = Project::where('student_id', $student_id)
-            ->where('approved', true)
             ->with('advisor')
             ->get();
         return response()->json($projects);
