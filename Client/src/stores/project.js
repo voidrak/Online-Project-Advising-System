@@ -313,7 +313,9 @@ export const useProjectStore = defineStore("projectStore", {
         this.errors = data.errors;
       } else {
         this.errors = {};
+        window.location.reload();
         return data;
+
       }
     },
   },

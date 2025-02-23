@@ -59,7 +59,6 @@ const router = createRouter({
       path: "/projects/:id",
       name: "UserProjectDetail",
       component: UserProjectDetailPage,
-      meta: { guest: true },
     },
     {
       path: "/admin",
