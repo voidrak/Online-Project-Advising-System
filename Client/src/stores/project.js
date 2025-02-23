@@ -298,27 +298,22 @@ export const useProjectStore = defineStore("projectStore", {
     },
 
     async updateProjectDocument(projectId, formData) {
-      // console.log(file.value);
-      // const formData = new FormData();
-      // formData.append("document", file);
-      for (const [key, value] of formData.entries()) {
-        console.log(`${key}: ${value}`);
-      }
+
       const res = await fetch(`/api/projects/${projectId}/document`, {
-        method: "PUT",
+        method: "POST",
         headers: {
           authorization: `Bearer ${localStorage.getItem("token")}`,
-          "Content-Type": "multipart/form-data",
         },
         body: formData,
       });
 
       const data = await res.json();
+      console.log(data)
       if (data.errors) {
         this.errors = data.errors;
       } else {
+        this.errors = {};
         return data;
-        console.log("Document updated successfully");
       }
     },
   },

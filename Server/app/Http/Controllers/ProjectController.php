@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\DeadlineNotification; // Create this Mailable
 use Carbon\Carbon; // Import Carbon
+use Illuminate\Support\Str;
 
 class ProjectController extends Controller
 {
@@ -55,6 +56,7 @@ class ProjectController extends Controller
             ->get();
         return response()->json($projects);
     }
+
     /**
      * Store a newly created resource in storage.
      */
@@ -185,9 +187,7 @@ class ProjectController extends Controller
         return response()->json(['message' => 'Deadline notification sent successfully']);
     }
 
-    /**
-     * Get projects that belong to a specific student and are approved.
-     */
+
     public function getApprovedProjectsByStudent($student_id)
     {
         $projects = Project::where('student_id', $student_id)
@@ -196,25 +196,23 @@ class ProjectController extends Controller
         return response()->json($projects);
     }
 
+
     public function updateDocument(Request $request, Project $project)
     {
-        // dd($project);
+        // return $request;
         $validatedData = $request->validate([
             'document' => 'required|file|mimes:pdf,doc,docx,jpeg,png,txt,csv,xls,xlsx,ppt,pptx',
         ]);
 
-        // if ($request->hasFile('document')) {
-        //     $path = $request->file('document')->store('documents', 'public');
-        //     $project->document = $path;
-        //     $project->save();
-        //         }
-
         if ($request->hasFile('document')) {
-            $path = $request->file('document')->store('documents', 'public');
-            $validatedData['document'] = $path;
+            $file = $request->file('document');
+
+            $fileName = Str::slug($project->project_title) . '_' . Str::random(10) . '.' . $file->getClientOriginalExtension();
+            $filePath = $file->storeAs('documents', $fileName, 'public');
+            $validatedData['document'] = $filePath;
         }
 
         $project->update($validatedData);
-        return response()->json(['message' => 'Document updated successfully', 'document' => $path]);
+        return response()->json(['message' => 'Document updated successfully', 'document' => $filePath]);
     }
 }
