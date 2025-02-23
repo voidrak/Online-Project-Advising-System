@@ -13,7 +13,7 @@ class UserController extends Controller
     {
         return User::where('approved', true)
             ->where('role', '!=', 'admin')
-            ->get();
+            ->latest()->get();
     }
 
     public function getRegisterRequests()

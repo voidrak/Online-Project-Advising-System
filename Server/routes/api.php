@@ -34,8 +34,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('/assign-advisor/{project}', [ProjectController::class, 'assignAdvisor']);
     Route::post('/projects', [ProjectController::class, 'store']);
     Route::put('/projects/{project}', [ProjectController::class, 'update']);
-    Route::put('/projects/{project}/document', [ProjectController::class, 'updateDocument']);
- 
+    Route::post('/projects/{project}/document', [ProjectController::class, 'updateDocument']);
+
 
     Route::get('/projects/advisor/{advisor_id}', [ProjectController::class, 'getProjectsByAdvisor']);
     Route::get('/projects/advisor/{advisor_id}/approved', [ProjectController::class, 'getApprovedProjectsbyAdvisor']);
